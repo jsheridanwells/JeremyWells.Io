@@ -1,0 +1,53 @@
+# Dependencies
+#markdown:         redcarpet
+#highlighter:      pygments
+
+# Permalinks
+#permalink:        pretty
+#relative_permalinks: true
+
+# Setup
+title:            'Jeremy Wells'
+tagline:          'Software Developer | Nashville, TN'
+description:      >-
+  Second-career software engineer sharing favorite recipes
+  in .Net, Angular, & anything else worth tinkering with.
+
+url:              https://jeremywells.io
+baseurl:          /
+
+# Build settings
+#theme: minima
+plugins:
+  - jekyll-feed
+
+social-icons:
+  - name: fab fa-github
+    url: https://github.com/jsheridanwells
+  - name: fab fa-twitter
+    url: https://twitter.com/jsheridanwells
+  - name: fab fa-linkedin
+    url: https://linkedin.com/in/jsheridanwells
+  - name: fas fa-envelope
+    url: https://formspree.io/jsheridanwells@gmail.com
+paginate: 5
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+# exclude:
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/

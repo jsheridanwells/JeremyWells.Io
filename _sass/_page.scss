@@ -1,0 +1,19 @@
+@import "var/media";
+
+.page {
+  padding-bottom: 5rem;
+}
+
+img.artie {
+  border: 2px solid lightblue;
+  margin: 3rem auto;
+  display: block;
+  border-radius: 50%;
+  width: 25%;
+}
+
+@media screen and (max-width: $mobileW) {
+  img.artie {
+    width: 50%;
+  }
+}

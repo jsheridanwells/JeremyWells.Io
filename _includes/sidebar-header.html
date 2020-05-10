@@ -1,0 +1,51 @@
+<div class="sidebar">
+    <div class="sidebar-about">
+        <div class="sidebar-title">
+            <h1>
+                <a href="{{ site.baseurl }}">
+                    {{ site.title }}
+                </a>
+            </h1>
+        </div>
+        <div class="sidebar-lead">
+            <p class="lead">
+                <em>{{ site.description }}</em>
+            </p>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}">Home</a>
+            {% assign pages_list = site.pages %}
+            {% for node in pages_list %}
+            {% if node.title != null %}
+            {% if node.layout == "page" %}
+            {% if node.publish %}
+            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">
+                {{ node.title }}
+            </a>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </nav>
+        <div class="sidebar-social">
+            <ul class="sidebar-social-list">
+                {% assign social_list = site.social-icons %}
+                {% for i in social_list %}
+                <li>
+                    <a href="{{ i.url }}" target="_blank">
+                        <i class="{{ i.name }} fa-2x social-icon"></i>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="sidebar-copyright">
+            <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
+            <p>
+                This site was built with <a href="https://jekyllrb.com/" target="_blank">Jekyll</a>, borrowing
+                heavily from the <a href="https://github.com/poole/hyde" target="_blank">Hyde</a> and
+                <a href="https://github.com/thelehhman/plainwhite-jekyll" target="_blank">Plain White Jekyll</a> themes.
+            </p>
+        </div>
+    </div>
+</div>
