@@ -1,7 +1,8 @@
 @import "var/colors";
-@import "var/_media";
+@import "var/media";
 
 .sidebar-title {
+  margin: 15% 0 0 0;
   padding: 20% 10%;
 }
 
@@ -10,7 +11,7 @@
 }
 
 .sidebar-lead {
-  margin: 20% 1rem 2rem 1rem;
+  margin: 5% 1rem 2rem 1rem;
 }
 
 p.lead {
@@ -66,6 +67,11 @@ ul.sidebar-social-list {
   .sidebar-copyright
   {
     display: none;
+  }
+
+  .sidebar-title {
+    margin: 0;
+    padding: 1rem 0 0 0;
   }
 
   nav.sidebar-nav {

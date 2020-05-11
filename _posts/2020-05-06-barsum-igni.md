@@ -3,13 +3,10 @@ layout: post
 title: otro un
 ---
 
-## Facerent post dapibus
-
 Lorem markdownum vultu, enim? Tuta est? Seu Medea coma, ignara est dissaepserat
 clamore Orphea prolemque laborem exiguo. Pudet res adiutis relinquo spernit
 loquor resonabilis laniatum. Deae tamen, sua posses, et sic iuvenes altum.
 
-<!--more-->
 
 1. Ait diuque et arbore iaculo scelerato a
 2. Non Dixerat senem auras
@@ -38,7 +35,7 @@ Vellet [manu](http://caputque.io/videres): illa templa, tu tot lux sternitur
 aquas lentosque corpore reguntur ab medio volant! Humana nos Aeacon! Tantae
 titubantis valle vestigia comis et speciem equina tollere **ad** relanguit
 scitis, clamat.
-
+```
     if (48) {
         icon_web_brouter = rpc_web_toolbar * cardImpactDown;
         registry_array.non += cardProtocolUdp;
@@ -48,6 +45,7 @@ scitis, clamat.
     gis.ictDeletePlatform(white(install.configuration_alert(full_bios, 4)));
     switch.bloatwareEbook += diskDocking + ppmMatrix - superscalarDriveVirus +
             hoc;
+```
 
 Pallor talisque carissime receptus cacumina per robusta dextram fraudem, dum!
 Prius Numitorque lignum iamque, totas rotis, zonae vellera. **Videres hospes**

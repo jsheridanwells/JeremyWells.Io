@@ -2,13 +2,10 @@
 layout: post
 ---
 
-## Est sum amato mihi visum sprevit dubitavit
 
 Lorem markdownum patruique quae [quoniam
 paelice](http://www.offensarevulsit.net/). Trahoque isset, me Alcyonen optatae;
 eo in tendere potens inde; atras, res, superis opes tuli.
-
-<!--more-->
 
 ## Manus sic gradus quo cursu volutant pater
 

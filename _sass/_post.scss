@@ -1,0 +1,15 @@
+@import "var/colors";
+
+h1.post-title {
+  margin: 2rem 0 0 0;
+  color: $darkerBlue;
+}
+
+.post-date {
+  padding-left: 1rem;
+  font-size: 0.75rem;
+}
+
+.post-content {
+  margin: 2rem;
+}

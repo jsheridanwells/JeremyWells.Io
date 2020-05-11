@@ -1,11 +1,3 @@
-# Dependencies
-#markdown:         redcarpet
-#highlighter:      pygments
-
-# Permalinks
-#permalink:        pretty
-#relative_permalinks: true
-
 # Setup
 title:            'Jeremy Wells'
 tagline:          'Software Developer | Nashville, TN'
@@ -21,6 +13,16 @@ baseurl:          /
 plugins:
   - jekyll-feed
 
+# Conversion
+markdown:    kramdown
+highlighter: rouge
+
+# Markdown Processors
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+
 social-icons:
   - name: fab fa-github
     url: https://github.com/jsheridanwells
@@ -28,8 +30,7 @@ social-icons:
     url: https://twitter.com/jsheridanwells
   - name: fab fa-linkedin
     url: https://linkedin.com/in/jsheridanwells
-  - name: fas fa-envelope
-    url: https://formspree.io/jsheridanwells@gmail.com
+
 paginate: 5
 
 # Exclude from processing.

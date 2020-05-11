@@ -1,8 +1,36 @@
+@import "var/colors";
+@import "var/media";
+
 ul.index-post-list {
   list-style-type: none;
 
+  li {
+    padding-bottom: 2rem;
+  }
+
   a {
     display: inline-block;
+    color: $mediumBlue;
+    text-decoration: none;
+  }
+
+  p {
+    padding: 0 5rem;
   }
 }
 
+@media screen and (max-width: $mobileW) {
+  .index-container {
+    margin-top: 5rem;
+  }
+
+  ul.index-post-list {
+    li {
+      padding-bottom: 1rem;
+    }
+
+    p {
+      padding: 0;
+    }
+  }
+}

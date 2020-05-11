@@ -2,22 +2,20 @@
 layout: post
 ---
 
-## Horrea amplectitur effice
-
 Lorem markdownum solio: et ursa cui est fulmina patriae. Superque institerant
 dabat cuspide solebat! Ita gigantas, mansit ferox inter argento magna *ut
 rector* perque, quaerens utque; omnia amictu, meum ferro. Iuppiter tori penna
 alvum, erat conanti **situs**, uterque reticere inprudens omnis, prominet
 comitum commissa, commune.
 
-<!--more-->
-
+```
     file_mysql(5, spoofingTouchscreen + -5, bankruptcyModemService);
     denialCss = textRisc.sinkWep.variable(transfer_ebook_cross.cdma_suffix_rpm(
             cpmTerahertzProm, nvram));
     var drive = 1;
     var nat = json_port_website(-4 - firmware_bcc_bandwidth);
     grayscaleIsa.jsp_word = macro(-1, ppl, -4);
+```
 
 ## Ecce pavefacta
 
