@@ -4,17 +4,36 @@
 
 .page {
   @include shadow-1;
-  padding: 5rem;
+  padding: 2rem 3rem 1rem 3rem;
   min-height: 100%;
 }
 
 // /about/
-img.artie {
+
+.about-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.about-copy-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-right: 2rem;
+
+  p {
+    margin: 1rem 0;
+  }
+}
+
+img.about-artie {
   border: 2px solid lightblue;
   margin: 3rem auto;
   display: block;
   border-radius: 50%;
-  width: 25%;
+  //width: 25%;
+  float: right;
 }
 
 
@@ -36,7 +55,32 @@ button.contact-submit-btn {
 }
 
 @media screen and (max-width: $mobileW) {
-  img.artie {
-    width: 50%;
+  .page {
+    text-align: center;
+  }
+
+  .about-container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .about-copy-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-right: 0;
+
+    p {
+      margin: 1rem 0;
+    }
+  }
+
+  .about-image-container {
+    margin: 2rem 0;
+  }
+
+  img.about-artie {
+    margin: 0;
+    float: initial;
   }
 }
