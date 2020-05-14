@@ -2,8 +2,6 @@
 layout: post
 ---
 
-## Collibus fugant
-
 Lorem markdownum celebrant curvae. Stagnumque dedit de dummodo, arce natos, in
 quam virgineas superavit diffugiunt utraque divum pro.
 

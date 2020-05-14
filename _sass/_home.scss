@@ -6,6 +6,7 @@
   flex-direction: row;
   height: 100%;
   padding: 2rem 2rem;
+  background-color: $offWhite;
 }
 
 .sidebar-container {
@@ -29,7 +30,7 @@
 @media screen and (max-width: $smallMobileW) {
   .site-container {
     flex-direction: column;
-    padding: 2rem 2rem;
+    padding: 0.2rem;
   }
   .sidebar-container {
     width: 100%;
@@ -39,6 +40,7 @@
   }
 
   .content-container {
-    margin: 6.5rem 0;
+    margin: 4.5rem 0;
+    //margin: 6.5rem 0;
   }
 }

@@ -26,6 +26,8 @@ kramdown:
 social-icons:
   - name: fab fa-github
     url: https://github.com/jsheridanwells
+  - name: fab fa-dev
+    url : https://dev.to/jsheridanwells
   - name: fab fa-twitter
     url: https://twitter.com/jsheridanwells
   - name: fab fa-linkedin
@@ -52,3 +54,8 @@ paginate: 5
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+exclude:
+  - gruntfile.js
+  - package.json
+  - package-lock.json

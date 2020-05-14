@@ -1,0 +1,35 @@
+---
+layout: page
+title: Contact
+permalink: /contact/
+publish: true
+---
+<div class="contact-container">
+    <div class="contact-copy">
+        <p class="contact-text">
+            Questions? Concerns? Wanna collaborate?
+        </p>
+        <p class="contact-text">
+            Drop me a line below...
+        </p>
+    </div>
+    <form id="contact-form" action="https://formspree.io/jsheridanwells@gmail.com" method="POST">
+        <div class="form-group">
+            <label for="contact-name" class="contact-label">Name</label>
+            <input type="text" class="form-control contact-label" id="contact-name" placeholder="Your Name" name="contact-name" data-pristine-required>
+        </div>
+        <div class="form-group">
+            <label for="contact-email" class="contact-label">Email</label>
+            <input type="email" class="form-control contact-label" id="contact-email" placeholder="you@youremail.com" name="contact-email" data-pristine-email>
+        </div>
+        <div class="form-group">
+            <label for="contact-message" class="contact-label">Message</label>
+            <textarea name="contact-message" id="contact-message" class="form-control contact-label"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" id="contact-submit" class="btn contact-submit-btn">
+                Send
+            </button>
+        </div>
+    </form>
+</div>

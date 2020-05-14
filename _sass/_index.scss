@@ -1,11 +1,14 @@
 @import "var/colors";
 @import "var/media";
+@import "var/mat-shadows";
 
 ul.index-post-list {
   list-style-type: none;
 
   li {
-    padding-bottom: 2rem;
+    @include shadow-1;
+    margin: 1rem;
+    padding: 2rem 1rem;
   }
 
   a {
@@ -15,7 +18,13 @@ ul.index-post-list {
   }
 
   p {
-    padding: 0 5rem;
+    padding: 0 9rem 0 1rem;
+    //border: 1px solid red;
+  }
+
+  p.post-read-more {
+    text-align: right;
+    font-size: 0.8rem;
   }
 }
 
@@ -25,6 +34,8 @@ ul.index-post-list {
   }
 
   ul.index-post-list {
+    padding: 0;
+
     li {
       padding-bottom: 1rem;
     }

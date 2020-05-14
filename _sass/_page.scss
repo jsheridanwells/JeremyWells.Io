@@ -1,15 +1,38 @@
+@import "var/colors";
 @import "var/media";
+@import "var/mat-shadows";
 
 .page {
-  padding-bottom: 5rem;
+  @include shadow-1;
+  padding: 5rem;
+  min-height: 100%;
 }
 
+// /about/
 img.artie {
   border: 2px solid lightblue;
   margin: 3rem auto;
   display: block;
   border-radius: 50%;
   width: 25%;
+}
+
+
+
+// /contact/
+.contact-copy {
+  padding: 2rem 0;
+}
+
+p.contact-text {
+  font-size: 1.1rem;
+}
+
+button.contact-submit-btn {
+  background-color: $mediumBlue;
+  color: white;
+  float: right;
+  margin-right: 3rem;
 }
 
 @media screen and (max-width: $mobileW) {

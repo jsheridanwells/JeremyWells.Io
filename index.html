@@ -11,6 +11,10 @@ layout: home
             <p class="excerpt">
                 {{ post.excerpt }}
             </p>
+            <p class="post-read-more">
+                <a href="{{ post.url }}">[Read More...]</a>
+                <p>no more</p>
+            </p>
         </li>
         {% endfor %}
     </ul>

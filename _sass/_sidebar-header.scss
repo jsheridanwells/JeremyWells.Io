@@ -1,21 +1,37 @@
 @import "var/colors";
 @import "var/media";
 
+.sidebar > * {
+  font-family: 'Nunito Sans', sans-serif;
+  a {
+    color: #282C34;
+    transition: color 0.3s;
+    &:hover {
+      color: $linkColor;
+    }
+  }
+}
+
 .sidebar-title {
   margin: 15% 0 0 0;
   padding: 20% 10%;
 }
 
 .sidebar-title > h1 {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 800;
   text-align: center;
+  a {
+    text-decoration: none;
+  }
 }
 
 .sidebar-lead {
-  margin: 5% 1rem 2rem 1rem;
+  padding: 0 1.5rem;
 }
 
 p.lead {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   text-align: center;
 }
 
@@ -28,7 +44,7 @@ nav.sidebar-nav {
 a.sidebar-nav-item {
   display: inline-block;
   margin: 0 1rem 2rem 1rem;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
 }
 
 a.active {
@@ -51,8 +67,9 @@ ul.sidebar-social-list {
   position: absolute;
   bottom: 0;
   margin-left: 1rem;
+  padding-bottom: 1.5rem;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 
   a {
     font-weight: bold;
