@@ -2,8 +2,8 @@
 title:            'Jeremy Wells'
 tagline:          'Software Developer | Nashville, TN'
 description:      >-
-  Second-career software engineer sharing favorite recipes
-  in .Net, Angular, & anything else worth tinkering with.
+  Full-stack software engineer sharing favorite recipes
+  in .NET, Angular, & anything else worth tinkering with.
 
 url:              https://jeremywells.io
 baseurl:          /
@@ -33,7 +33,7 @@ social-icons:
   - name: fab fa-linkedin
     url: https://linkedin.com/in/jsheridanwells
 
-paginate: 5
+paginate: 10
 
 # Exclude from processing.
 # The following items will not be processed, by default.

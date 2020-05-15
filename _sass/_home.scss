@@ -14,7 +14,8 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: $leftWidth;
+  //width: $leftWidth;
+  width: $headerOnSide;
   background-color: $brown;
   border-right: 5px solid $lightBlue;
   border-bottom: 0;
@@ -34,6 +35,7 @@
   }
   .sidebar-container {
     width: 100%;
+    height: $headerOnTop;
     bottom: initial;
     border-right: 0;
     border-bottom: 5px solid $lightBlue;
