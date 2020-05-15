@@ -14,7 +14,6 @@
   top: 0;
   bottom: 0;
   left: 0;
-  //width: $leftWidth;
   width: $headerOnSide;
   background-color: $brown;
   border-right: 5px solid $lightBlue;
@@ -33,6 +32,7 @@
     flex-direction: column;
     padding: 0.2rem;
   }
+
   .sidebar-container {
     width: 100%;
     height: $headerOnTop;

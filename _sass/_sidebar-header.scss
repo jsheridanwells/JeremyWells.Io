@@ -52,7 +52,7 @@ a.active {
 }
 
 .sidebar-social {
-  margin: 30% 0 0 0;
+  margin: 30% 0;
 }
 
 ul.sidebar-social-list {
@@ -66,7 +66,7 @@ ul.sidebar-social-list {
 .sidebar-copyright {
   position: absolute;
   bottom: 0;
-  margin-left: 1rem;
+  margin: 0 1rem;
   padding-bottom: 1.5rem;
   text-align: center;
   font-size: 0.7rem;
@@ -81,8 +81,7 @@ ul.sidebar-social-list {
   .sidebar-splash,
   .sidebar-lead,
   .sidebar-social,
-  .sidebar-copyright
-  {
+  .sidebar-copyright {
     display: none;
   }
 

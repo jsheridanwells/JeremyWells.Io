@@ -54,8 +54,3 @@ paginate: 10
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-
-exclude:
-  - gruntfile.js
-  - package.json
-  - package-lock.json
