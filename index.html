@@ -4,22 +4,64 @@ layout: home
 <div class="index-container">
     <ul class="index-post-list">
         {% for post in site.posts %}
-        <li>
-            <a href="{{ post.url }}">
-                <h2>{{ post.title }}</h2>
-                <p class="date">{{ post.date | date_to_string }}</p>
-            </a>
-            <p class="excerpt">
-                {% if post.standfirst %}
-                {{ post.standfirst }}
-                {% else if %}
-                {{ post.excerpt }}
+            {% if jekyll.environment == "test" %}
+                <li>
+                    <a href="{{ post.url }}">
+                        <h2>{{ post.title }}</h2>
+                        <p class="date">{{ post.date | date_to_string }}</p>
+                    </a>
+                    <p class="excerpt">
+                        {% if post.standfirst %}
+                        {{ post.standfirst }}
+                        {% else if %}
+                        {{ post.excerpt }}
+                        {% endif %}
+                    </p>
+                    <p class="post-read-more">
+                        <a href="{{ post.url }}">[Read More...]</a>
+                    </p>
+                </li>
+            {% endif %}
+            {% if jekyll.environment == "development" %}
+                {% if post.test != true %}
+                <li>
+                    <a href="{{ post.url }}">
+                        <h2>{{ post.title }}</h2>
+                        <p class="date">{{ post.date | date_to_string }}</p>
+                    </a>
+                    <p class="excerpt">
+                        {% if post.standfirst %}
+                        {{ post.standfirst }}
+                        {% else if %}
+                        {{ post.excerpt }}
+                        {% endif %}
+                    </p>
+                    <p class="post-read-more">
+                        <a href="{{ post.url }}">[Read More...]</a>
+                    </p>
+                </li>
                 {% endif %}
-            </p>
-            <p class="post-read-more">
-                <a href="{{ post.url }}">[Read More...]</a>
-            </p>
-        </li>
+            {% endif %}
+            {% if jekyll.environment == "production" %}
+                {% if post.draft != true and post.test != true%}
+                <li>
+                    <a href="{{ post.url }}">
+                        <h2>{{ post.title }}</h2>
+                        <p class="date">{{ post.date | date_to_string }}</p>
+                    </a>
+                    <p class="excerpt">
+                        {% if post.standfirst %}
+                        {{ post.standfirst }}
+                        {% else if %}
+                        {{ post.excerpt }}
+                        {% endif %}
+                    </p>
+                    <p class="post-read-more">
+                        <a href="{{ post.url }}">[Read More...]</a>
+                    </p>
+                </li>
+                {% endif %}
+            {% endif %}
         {% endfor %}
     </ul>
 </div>

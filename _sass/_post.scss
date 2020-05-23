@@ -2,11 +2,18 @@
 @import "var/mat-shadows";
 @import "var/media";
 
+@mixin block-margins {
+  display: block;
+  margin: 4rem auto;
+  @include shadow-1();
+}
+
 .post {
   @include shadow-1;
   padding: 2rem 3rem 1rem 3rem;
   min-height: 100%;
   margin-bottom: 3rem;
+  width: 86%;
 }
 
 h1.post-title {
@@ -21,6 +28,25 @@ h1.post-title {
 
 .post-content {
   margin: 2rem;
+  h2, h3, h4, h5, h6 {
+    margin: 4rem 0 2rem 0;
+    font-family: "Raleway", sans-serif;
+  }
+}
+
+
+img.post-splash {
+  @include block-margins();
+  max-width: 90%;
+}
+
+img.post-image {
+  @include block-margins();
+  max-width: 80%;
+}
+
+div.highlight {
+  @include block-margins();
 }
 
 @media screen and (max-width: $mobileW ) {

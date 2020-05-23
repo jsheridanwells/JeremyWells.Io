@@ -1,5 +1,6 @@
 ---
 layout: post
+test: true
 ---
 
 Lorem markdownum solio: et ursa cui est fulmina patriae. Superque institerant

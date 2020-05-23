@@ -5,7 +5,7 @@ draft: true
 standfirst: 'If you are interested in original ways of presenting particularly large, unique, or complex data sets, then a dive into D3 is certainly worth the effort.'
 ---
 
-![Browser console after adding API key](/assets/img/2020-05-15/splash.jpg){:class="splash"}
+![Browser console after adding API key](/assets/img/2020-05-15/splash.jpg){:class="post-splash"}
 
 [D3](https://d3js.org/), or Data-Driven Documents, is still a top choice for data visualization in the browser. Part of its power is that it isn't merely a charts library, but rather a way to add and manipulate DOM elements in response to data.
 
