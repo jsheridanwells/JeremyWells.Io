@@ -6,59 +6,20 @@ layout: home
         {% for post in site.posts %}
             {% if jekyll.environment == "test" %}
                 <li>
-                    <a href="{{ post.url }}">
-                        <h2>{{ post.title }}</h2>
-                        <p class="date">{{ post.date | date_to_string }}</p>
-                    </a>
-                    <p class="excerpt">
-                        {% if post.standfirst %}
-                        {{ post.standfirst }}
-                        {% else if %}
-                        {{ post.excerpt }}
-                        {% endif %}
-                    </p>
-                    <p class="post-read-more">
-                        <a href="{{ post.url }}">[Read More...]</a>
-                    </p>
+                    {% include post-list-item.html %}
                 </li>
             {% endif %}
             {% if jekyll.environment == "development" %}
                 {% if post.test != true %}
                 <li>
-                    <a href="{{ post.url }}">
-                        <h2>{{ post.title }}</h2>
-                        <p class="date">{{ post.date | date_to_string }}</p>
-                    </a>
-                    <p class="excerpt">
-                        {% if post.standfirst %}
-                        {{ post.standfirst }}
-                        {% else if %}
-                        {{ post.excerpt }}
-                        {% endif %}
-                    </p>
-                    <p class="post-read-more">
-                        <a href="{{ post.url }}">[Read More...]</a>
-                    </p>
+                    {% include post-list-item.html %}
                 </li>
                 {% endif %}
             {% endif %}
             {% if jekyll.environment == "production" %}
                 {% if post.draft != true and post.test != true%}
                 <li>
-                    <a href="{{ post.url }}">
-                        <h2>{{ post.title }}</h2>
-                        <p class="date">{{ post.date | date_to_string }}</p>
-                    </a>
-                    <p class="excerpt">
-                        {% if post.standfirst %}
-                        {{ post.standfirst }}
-                        {% else if %}
-                        {{ post.excerpt }}
-                        {% endif %}
-                    </p>
-                    <p class="post-read-more">
-                        <a href="{{ post.url }}">[Read More...]</a>
-                    </p>
+                    {% include post-list-item.html %}
                 </li>
                 {% endif %}
             {% endif %}
