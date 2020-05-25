@@ -11,7 +11,7 @@ standfirst: 'This is an introductory post for a continuing series on building up
 
 ## Introduction
 
-I first learned about the concept of a ["walking skeleton"](#definition) project when I was following Michael Hartl's [Ruby on Rails tutorial](https://www.railstutorial.org/book/beginning#sec-the_hello_application). One of my favorite learning tools was an introductory chapter that builds out the simplest possible iteration of a Rails project from start to deployment in order to see the process of developing a web application end-to-end. If I can go from an initial CLI command to getting a page to say "Hello" back to me from a public web server, then I can be sure that everything in my local development setup is working properly and I've got a solid skeleton with which to implement my real features.
+I first learned about the concept of a ["walking skeleton"](http://alistair.cockburn.us/index.php/Walking_skeleton) project when I was following Michael Hartl's [Ruby on Rails tutorial](https://www.railstutorial.org/book/beginning#sec-the_hello_application). One of my favorite learning tools was an introductory chapter that builds out the simplest possible iteration of a Rails project from start to deployment in order to see the process of developing a web application end-to-end. If I can go from an initial CLI command to getting a page to say "Hello" back to me from a public web server, then I can be sure that everything in my local development setup is working properly and I've got a solid skeleton with which to implement my real features.
 
 With the walking skeleton idea in mind, this post will be the beginning of a series of tutorials taking an extremely simple [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-3.1) web application and building it out - from client, to server, to database, to tests, to deployment - with simple renderings of each necessary component. I intend for this project as a place to experiment with the new tools and techniques I learn along the way, and a reference for going back after I've long forgotten about what I did. Throughout, I hope this will serve as a clear introductory tutorial for beginning web developers looking to pick up on the offerings from the .NET ecosystem.
 
@@ -31,7 +31,7 @@ For now, here is the plan for the project:
 
 1. Deployment to an [AWS EC2](https://aws.amazon.com/ec2/) instance,
 
-These are the current technologies that I use in my current job, and as I explore others, I'll add them to this stack as I go.
+These are the current technologies that I use in my job, and as I explore others, I'll add them to this stack as I go.
 
 This project will live at this [Github repo](https://github.com/jsheridanwells/WeatherWalkingSkeleton). I'll commit example code for every tutorial to its own branch, and the `master` branch will be the latest working version of the project.
 
@@ -69,9 +69,9 @@ For the rest of this tutorial, we'll go through the important files in this proj
 
 ## File walkthrough
 
-What the .NET Core CLI has given us so far is a very basic application that returns a JSON list of weather temperatures from a single endpoint, just enough for use to see that we have working WebApi project. The three important files that make this happen are `Program.cs`, `Startup.cs`, and `WeatherForecastController.cs`.
+What the .NET Core CLI has given us so far is a very basic application that returns a list of weather temperatures from a single endpoint, just enough for us to see that we have working WebApi project. The three important files that make this happen are `Program.cs`, `Startup.cs`, and `WeatherForecastController.cs`.
 
-A `Program.cs` with a `Main()` method is the entry point for any executable application written in C# and it shows us that at it's core a WebApi project is a console application. In our template file, the `Main()` method calls `CreateHostBuilder()` which puts together all of the default settings for running a web server on our development machine:
+A `Program` class with a `Main()` method is the entry point for any executable application written in C# and it shows us that at it's core a WebApi project is a console application. In our template file, the `Main()` method calls `CreateHostBuilder()` which puts together all of the default settings for running a web server on our development machine:
 ```csharp
 public static void Main(string[] args)
 {

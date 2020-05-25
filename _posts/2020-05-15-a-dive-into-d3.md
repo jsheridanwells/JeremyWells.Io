@@ -85,7 +85,7 @@ export function drawChart(chartData) {
 }
 ```
 
-The first set of variables - `margin`, `width`, and `height` - are set using the height of the browser window and whatever heights of the `#chart` and the `#nav` divs happen to be. This assures us that our chart will fit where it's supposed to be no matter the size of the browser window.
+The first set of variables - `margin`, `width`, and `height` - are set using the height of the browser window and whatever heights the `#chart` and `#nav` divs happen to be. This assures us that our chart will fit where it's supposed to be no matter the size of the browser window.
 
 The second variable - `svg` - comes from D3 selecting the `#chart` div, and appending an `svg` element. The `height` and `width` are SVG attributes that are set using the height, width, and margin variables that we came up with in the first step. An empty `<g>` element is added to the SVG. `<g>` is an element to "group" the other child elements that will be added to the SVG later. Lastly, we're setting the `transform` attribute to shift the SVG so that there's some space between the SVG and the edge of the `<div>` that it lives in.
 
@@ -129,7 +129,7 @@ Our data - called `chartData` - will be coming in as an array of objects with tw
 ]
 ```
 
-The `yScale` is set with D3's `scaleLinear` method. This method basically maps the lowest and highest values of a dataset to the height of the Y axis in our chart. The `domain` method tells us to take the lowest to highest `temp_max` values in our array, and map it to our `range` which is 0 to the height of our chart (plus 10 to give a little space over the highest point our line will reach). 
+The `yScale` is set with D3's `scaleLinear` method. This method basically maps the lowest and highest values of a dataset to the height of the Y axis in our chart. The `domain` method tells us to take the lowest to highest `temp_max` values in our array, and map it to our `range` which is 0 to the height of our chart (plus 10 to give a little space over the highest point that our line will reach). 
 
 `xScale` is working similarily, setting a scale to our `time` values and mapping it from 0 to the width of the chart. Creating the scale with `scaleTime()` rather than `scaleLinear()` gives us access to special time-based values, while the latter function returns a linear series of integers.
 
@@ -272,4 +272,4 @@ And now we've got our line chart:
 
 ## Conclusion
 
-And with the above function, you've got an SVG that dynamically reacts to different data sets that are sent to it. By manipulating SVG elements, setting scales, and leveraging some of D3's extensive functions for manipulating and rendering data, you can see the level of detail that can be applied to creating visualizations with raw data. 
+And with the above function, you've got an SVG that dynamically reacts to different data sets that are sent to it. By manipulating SVG elements, setting scales, and leveraging some of D3's extensive functions for manipulating and rendering data, you can see the level of detail that can be applied to creating visualizations with raw data. From going through the steps of seting up a line chart - setting the rendering area, declaring scales, mapping XY coordinates to our data, then specifying the elements to add according to the data - we get a sense of the process of setting up a D3 visualization that we can experiment with further, as well as study the thousands of other impressive D3 data illustration and creative coding that are out there. 
