@@ -7,7 +7,7 @@ standfirst: 'If you are interested in original ways of presenting particularly l
 
 ![Browser console after adding API key](/assets/img/2020-05-15/splash.jpg){:class="post-splash"}
 
-###### Photo by [Mika Baumeister ](https://unsplash.com/@mbaumi) on [Unsplash](https://unsplash.com/s/photos/chart?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
 
 [D3](https://d3js.org/), or Data-Driven Documents, is still a top choice for data visualization in the browser. Part of its power is that it isn't merely a charts library, but rather a way to add and manipulate DOM elements in response to data.
 
