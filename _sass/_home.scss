@@ -7,6 +7,11 @@
   height: 100%;
   padding: 2rem 2rem;
   background-color: $offWhite;
+
+  @include for-phone-only {
+    flex-direction: column;
+    padding: 0.2rem;
+  }
 }
 
 .sidebar-container {
@@ -18,6 +23,14 @@
   background-color: $brown;
   border-right: 5px solid $lightBlue;
   border-bottom: 0;
+
+  @include for-phone-only {
+    width: 100%;
+    height: $headerOnTop;
+    bottom: initial;
+    border-right: 0;
+    border-bottom: 5px solid $lightBlue;
+  }
 }
 
 .content-container {
@@ -25,23 +38,8 @@
   width: 100%;
   height: 100%;
   margin-bottom: 3rem;
-}
 
-@media screen and (max-width: $mobileMax) {
-  .site-container {
-    flex-direction: column;
-    padding: 0.2rem;
-  }
-
-  .sidebar-container {
-    width: 100%;
-    height: $headerOnTop;
-    bottom: initial;
-    border-right: 0;
-    border-bottom: 5px solid $lightBlue;
-  }
-
-  .content-container {
+  @include for-phone-only {
     margin: 7.5rem 0;
   }
 }

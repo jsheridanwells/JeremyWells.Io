@@ -5,20 +5,45 @@
 ul.index-post-list {
   list-style-type: none;
 
+  @include for-phone-only {
+    padding: 0;
+  }
+
   li {
     @include shadow-1;
     margin: 1rem;
     padding: 2rem 1rem;
+    @include for-phone-only {
+      padding-bottom: 1rem;
+    }
   }
 
   a {
-    display: inline-block;
+    display: block;
     color: $mediumBlue;
     text-decoration: none;
   }
 
+  h2.post-list-title {
+    @include for-phone-only {
+      width: 100%;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+  }
+
   p {
     padding: 0 9rem 0 1rem;
+    @include for-phone-only {
+      padding: 0;
+      font-size: 0.8rem;
+    }
+  }
+
+  p.date {
+    @include for-phone-only {
+      text-align: center;
+    }
   }
 
   p.post-read-more {
@@ -27,20 +52,3 @@ ul.index-post-list {
   }
 }
 
-@media screen and (max-width: $mobileMax) {
-  .index-container {
-    margin-top: 4.5rem;
-  }
-
-  ul.index-post-list {
-    padding: 0;
-
-    li {
-      padding-bottom: 1rem;
-    }
-
-    p {
-      padding: 0;
-    }
-  }
-}

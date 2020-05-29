@@ -15,6 +15,11 @@
 .sidebar-title {
   margin: 15% 0 0 0;
   padding: 20% 10%;
+
+  @include for-phone-only {
+    margin: 0;
+    padding: 1rem 0 0 0;
+  }
 }
 
 .sidebar-title > h1 {
@@ -83,11 +88,6 @@ ul.sidebar-social-list {
   .sidebar-social,
   .sidebar-copyright {
     display: none;
-  }
-
-  .sidebar-title {
-    margin: 0;
-    padding: 1rem 0 0 0;
   }
 
   nav.sidebar-nav {
