@@ -27,7 +27,7 @@
   margin-bottom: 3rem;
 }
 
-@media screen and (max-width: $smallMobileW) {
+@media screen and (max-width: $mobileMax) {
   .site-container {
     flex-direction: column;
     padding: 0.2rem;

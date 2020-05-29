@@ -49,7 +49,7 @@ div.highlight {
   @include block-margins();
 }
 
-@media screen and (max-width: $mobileW ) {
+@media screen and (max-width: $mobileMax) {
   h1.post-title {
     font-size: 2rem;
     text-align: center;
