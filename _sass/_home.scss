@@ -3,7 +3,6 @@
 
 .site-container {
   display: flex;
-  flex-direction: row;
   height: 100%;
   padding: 2rem 2rem;
   background-color: $offWhite;
@@ -12,17 +11,16 @@
     flex-direction: column;
     padding: 0.2rem;
   }
+  @include for-tablet-portrait-up {
+    flex-direction: row;
+  }
 }
 
 .sidebar-container {
   position: fixed;
   top: 0;
-  bottom: 0;
   left: 0;
-  width: $headerOnSide;
   background-color: $brown;
-  border-right: 5px solid $lightBlue;
-  border-bottom: 0;
 
   @include for-phone-only {
     width: 100%;
@@ -30,6 +28,14 @@
     bottom: initial;
     border-right: 0;
     border-bottom: 5px solid $lightBlue;
+  }
+
+  @include for-tablet-portrait-up {
+    background-color: $brown;
+    border-right: 5px solid $lightBlue;
+    border-bottom: 0;
+    width: $headerOnSide;
+    bottom: 0;
   }
 }
 
