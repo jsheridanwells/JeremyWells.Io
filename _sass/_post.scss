@@ -10,10 +10,20 @@
 
 .post {
   @include shadow-1;
-  padding: 2rem 3rem 1rem 3rem;
+  //padding: 2rem 3rem 1rem 3rem;
   min-height: 100%;
-  margin-bottom: 3rem;
-  width: 86%;
+  margin: 1rem 0;
+  //width: 86%;
+  width: 100%;
+  @include for-phone-only {
+    padding: 1rem;
+  }
+  @include for-tablet-portrait-up {
+    padding: 2rem 3rem 1rem 1rem;
+  }
+  @include for-tablet-landscape-up {
+    padding: 2rem 3rem 1rem 3rem;
+  }
 }
 
 h1.post-title {
@@ -21,7 +31,7 @@ h1.post-title {
   color: $darkerBlue;
 
   @include for-phone-only {
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: center;
     margin-bottom: 1.5rem;
   }
@@ -40,13 +50,34 @@ h1.post-title {
 
 .post-content {
   margin: 2rem;
-  h2, h3, h4, h5, h6 {
+  h2, h3, h4, h5 {
     margin: 4rem 0 2rem 0;
     font-family: "Raleway", sans-serif;
+  }
+  p {
+    line-height: 1.3rem;
+    margin-bottom: 2rem;
   }
 
   @include for-phone-only {
     margin: 2rem 0;
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  h6 {
+    margin: 0 2rem 2rem 0;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.8rem;
+    text-align: right;
+    a {
+      color: $mediumBlue;
+    }
+    @include for-phone-only {
+      font-size: 0.7rem;
+      margin-right: 1rem;
+    }
   }
 }
 
@@ -58,7 +89,7 @@ img.post-splash {
 
 img.post-image {
   @include block-margins();
-  max-width: 80%;
+  max-width: 100%;
 }
 
 div.highlight {
