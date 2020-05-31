@@ -15,6 +15,7 @@
   margin: 1rem 0;
   //width: 86%;
   width: 100%;
+
   @include for-phone-only {
     padding: 1rem;
   }
@@ -74,6 +75,7 @@ h1.post-title {
     a {
       color: $mediumBlue;
     }
+
     @include for-phone-only {
       font-size: 0.7rem;
       margin-right: 1rem;

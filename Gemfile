@@ -2,6 +2,7 @@ source "https://rubygems.org"
 gem "jekyll", "~> 4.0.0"
 
 gem "rouge"
+gem "jekyll-gist"
 
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"

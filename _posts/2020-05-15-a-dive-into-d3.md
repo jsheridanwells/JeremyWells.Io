@@ -44,14 +44,12 @@ You wont' have to modify any of the files above except `line-chart-.js` for this
 The [OpenWeatherMap](https://openweathermap.org/api) api is an option I like for testing out a new tool using data from an external source. Walk through their sign up process, then you can generate your own API key that's found at [this url](https://home.openweathermap.org/api_keys).
 
 With your api key, we'll do a quick and dirty command to create an api key file that will be ignored in source control, but threaded into the rest of the application:
-```bash
-$ echo 'export const apiKey = "<YOUR OPEN WEATHER MAP API KEY>";' >> javascripts/apiKey.js
-```
+
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 01.sh %}
 
 When you see a new javascript file called `apiKey.js` with the following contents, you should be ready:
-```javascript
-export const apiKey = "<YOUR OPEN WEATHER MAP API KEY>";
-```
+
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 02.js %}
 
 Refresh your application and if everything is successful, it should call out to the OpenWeatherMap API, and you'll see different cities in the result box when you enter different US zip codes. Likewise, if you open up the console, you should see a response from the OpenWeatherMap api.
 
@@ -67,69 +65,27 @@ We'll start our chart by setting up an SVG element that will render our illustra
 
 In the `drawChart` function, we'll begin by setting up the height, width, and margins of our chart so that it fits within the space we've allocated to it on the page.
 
-```javascript
-// lineChart.js
-
-export function drawChart(chartData) {
-
-  // 1. Set the height, width, and margin of the chart based on the window and height of the navbar.
-  let margin = {top: 50, right: 50, bottom: 50, left: 50},
-      width = $('#chart').width() - margin.left - margin.right,
-      height = window.innerHeight - margin.top - margin.bottom - $('#nav').height() - 20;
-
-  // 2. Create an SVG using the dimensions set above.
-  let svg = d3.select('#chart').append('svg')
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-}
-```
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 03.js %}
 
 The first set of variables - `margin`, `width`, and `height` - are set using the height of the browser window and whatever heights the `#chart` and `#nav` divs happen to be. This assures us that our chart will fit where it's supposed to be no matter the size of the browser window.
 
 The second variable - `svg` - comes from D3 selecting the `#chart` div, and appending an `svg` element. The `height` and `width` are SVG attributes that are set using the height, width, and margin variables that we came up with in the first step. An empty `<g>` element is added to the SVG. `<g>` is an element to "group" the other child elements that will be added to the SVG later. Lastly, we're setting the `transform` attribute to shift the SVG so that there's some space between the SVG and the edge of the `<div>` that it lives in.
 
 Now, reload the page, click the __Submit__ button, and you should see a rectangular outline in the `#chart` area. Inside that div, an empty SVG should be rendered:
-```html
-<svg width="1270" height="896">
-    <g transform="translate(50,50)"></g>
-</svg>
-```
+
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 04.html %}
 
 ## 4. Setting the X and Y axes
 
 Next, we'll set the scale for the X and Y axes. The Y axis of our chart will be the temperatures over the next five days while the X axis will be the dates and times.
 
 We'll add the next two steps to the `drawChart` function:
-```javascript
-export function drawChart(chartData) {
 
-  // [...]
-
-  // 3. Set the scale for the y-axis, mapped from 0 to highest temperature + 10
-  const yScale = d3.scaleLinear()
-      .domain([0, d3.max(chartData, d => d.temp_max) + 10])
-      .range([height, 0]);
-
-  // 4. Set the scale for the x-axis, mapped to range of times in dataset
-  const xScale = d3.scaleTime()
-      .domain(d3.extent(chartData, d => d.time))
-      .range([0, width]);
-}
-```
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 05.js %}
 
 Our data - called `chartData` - will be coming in as an array of objects with two keys: `temp_max` and `time`, looking like this:
-```javascript
-[
-    {
-        temp_max: 62.4,
-        time: 1589749200000
-    },
-    // [...]
-]
-```
+
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 06.js %}
 
 The `yScale` is set with D3's `scaleLinear` method. This method basically maps the lowest and highest values of a dataset to the height of the Y axis in our chart. The `domain` method tells us to take the lowest to highest `temp_max` values in our array, and map it to our `range` which is 0 to the height of our chart (plus 10 to give a little space over the highest point that our line will reach). 
 
@@ -140,21 +96,8 @@ The scales are mapping objects that will be used in the next steps, so they don'
 ## 5. Adding points for the line
 
 We'll come back to another SVG method, this time to place dots across the chart for each time and temperature intersection. Let's add this to `drawChart`:
-```javascript
-export function drawChart(chartData) {
 
-  // [...]
-
-  // 5. Append dots for each temperature
-  svg.selectAll('.dot')
-      .data(chartData)
-      .enter().append('circle')
-      .attr('class', 'dot')
-      .attr('cx', (d) => xScale(d.time))
-      .attr('cy', (d) => yScale(d.temp_max))
-      .attr('r', 2);
-}
-```
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 07.js %}
 
 This is where D3 can be tricky to reason out. It starts with `selectAll`, which says to select elements with the CSS class `.dot`, but we don't have elements with that class until further down the chain (I'm thinking of it like the way `SELECT` comes first in a SQL query before you indicate the table to select from). 
 
@@ -167,53 +110,24 @@ If we refresh our page and submit another zip code, we'll see a series of dots a
 ![Adding SVG circles](/assets/img/2020-05-15/img-2.png){:class="post-image"}
 
 Likewise, all of our circles will have been added to the SVG:
-```html
-<svg width="1270" height="896">
-    <g transform="translate(50,50)">
-        <circle class="dot" cx="0" cy="109.7779616604606" r="2"></circle>
-        <circle class="dot" cx="30" cy="133.27044545579915" r="2"></circle>
-        <circle class="dot" cx="60" cy="168.28961522548602" r="2"></circle>
-        
-        <!-- etc. -->
-    </g>
-</svg>
-```
+
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 08.js %}
 
 ## 6. Connecting the points
 
 Next, we'll draw a line to connect the circles:
-```javascript
-export function drawChart(chartData) {
 
-  // [...]
-    const line = d3.line()
-        .x(d => xScale(d.time))
-        .y(d => yScale(d.temp_max));
-}
-```
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 09.js %}
 
 `d3.line()` returns a function that will output the X,Y coordinates for our line to follow, and we're indicating that the `time` and `temp_max` properties will determine those values. The output of the `d3.line()` function is an SVG path string: a string of commands for a path to follow.
 
 To actually draw the line, we'll add a `<path>` element to the SVG:
-```javascript
-export function drawChart(chartData) {
 
-  // [...]
-    svg.append('path')
-        .datum(chartData)
-        .attr('d', line)
-        .attr('class', 'line');
-}
-```
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 10.js %}
 
 We are appending the path to the SVG, indicating that `chartData` is our data, and using the output of `line` to set the path's `d` attribute (apparently [d stands for data](https://stackoverflow.com/a/23440390/9316547)). Lastly, we are adding a CSS class called 'line' that sets the appearance of the line. In `main.css`, this is how I styled the line in the boilerplate, but play around with it as you'd like:
-```css
-.line {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: 1;
-}
-```
+
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 11.css %}
 
 Now if you refresh the browser and submit another zip code, a line will connect the dots:
 
@@ -223,48 +137,20 @@ Now if you refresh the browser and submit another zip code, a line will connect 
 ## 7. Adding the Labels
 
 Our line doesn't make much sense without axis labels. We will append two more groups (`<g>`) to our SVG to indicate the time of day for every six hours on the X axis:
-```javascript
-export function drawChart(chartData) {
 
-  // [...]
-
-  svg.append('g')
-      .attr('transform', 'translate(0,' + height + ')')
-      .call(d3.axisBottom(xScale)
-      .ticks(d3.timeHour.every(6)));
-}
-```
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 12.js %}
 
 First we push the object to the bottom of the SVG with a `translate` command, then we use the mapping in the xScale function to determine the values, while the `ticks` set the intervals.
 
 The `append` command for the Y-axis is a little bit simpler to add, but more involved under the hood:
-```javascript
-export function drawChart(chartData) {
 
-  // [...]
-  svg.append('g')
-      .call(d3.axisLeft(yScale))
-}
-```
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 13.js %}
 
 For each item in the array that yScale outputs, D3 is adding a vertical align, then an SVG `<text>` element at every interval set by the yScale array. The [D3 Axis Methods](https://observablehq.com/collection/@d3/d3-axis) are worth getting more familiar with as they save a lot of tedious work with setting up axis labels.
 
 A final missing piece is that our viewer has no idea what our Y-axis numbers represent. Our last touch is to add a _'Temperature (F)'_ label. We'll extend the last `append` function further:
-```javascript
-export function drawChart(chartData) {
 
-  // [...]
-svg.append('g')
-      .call(d3.axisLeft(yScale))
-      .append('text')
-      .attr('fill', '#000000')
-      .text('Temperature (F)')
-      .attr('transform', 'rotate(-90)')
-      .attr('y', 5)
-      .attr('dy', '0.71em')
-      .attr('text-anchor', 'end');
-}
-```
+{% gist 12d41b79a0af6500cb2b3e9c30bd8e4e 14.js %}
 
 The `append('text')` and everything that follows is simply manually setting the attributes of an additional SVG `<text>` element. 
 

@@ -1,1 +1,10 @@
+// monokai for anything created with <pre><code> tags
 @import "ext/monokai";
+
+// darkmode for github gists
+@import "ext/github-dark";
+
+// remove github gist tags
+body .gist .gist-meta {
+  display: none;
+}
