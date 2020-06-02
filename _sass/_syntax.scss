@@ -8,3 +8,8 @@
 body .gist .gist-meta {
   display: none;
 }
+
+.gist {
+  display: inline-block !important;
+  width: 100% !important;
+}
