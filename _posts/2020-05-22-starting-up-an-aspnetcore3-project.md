@@ -43,24 +43,10 @@ The last prerequisite is to have the [.NET Core SDK](https://dotnet.microsoft.co
 
 I'm assuming now you've got the .NET Core SDK installed and an IDE or text editor to view it with. We will use the command line to scaffold a WebApi project.
 
-```bash
-$ dotnet new webapi -o WeatherWalkingSkeleton
-```
+{% gist f46be63d2179b955fdc2ee67712bab53 01.sh %}
 
-In the command, `new` will create a new .NET Core project (you can type `$ dotnet new -h` to see a list of all of the available project templates). The `-o` flag is used to set the name of the directory our project will live in, as well as the name of the project since we haven't specified otherwise. Altogether, this command will create the bare minimum files necessary to run the API as well as installing the required NuGet packages. This is what the `WeatherWalkingSkeleton/` directory will look like:
-```bash
-├── Controllers
-│   └── WeatherForecastController.cs
-├── Program.cs
-├── Properties
-│   └── launchSettings.json
-├── Startup.cs
-├── WeatherForecast.cs
-├── WeatherWalkingSkeleton.csproj
-├── appsettings.Development.json
-├── appsettings.json
+{% gist f46be63d2179b955fdc2ee67712bab53 02.sh %}
 
-```
 You should `cd` into the directory now: `$ cd WeatherWalkingSkeleton`.
 
 One last initial step - if you want to use Git for source control, you should add a `.gitignore` file with [these contents](https://github.com/github/gitignore/blob/master/VisualStudio.gitignore). This is a general list of paths to exclude from source control that will work with most project types and IDEs.
@@ -72,42 +58,21 @@ For the rest of this tutorial, we'll go through the important files in this proj
 What the .NET Core CLI has given us so far is a very basic application that returns a list of weather temperatures from a single endpoint, just enough for us to see that we have working WebApi project. The three important files that make this happen are `Program.cs`, `Startup.cs`, and `WeatherForecastController.cs`.
 
 A `Program` class with a `Main()` method is the entry point for any executable application written in C# and it shows us that at it's core a WebApi project is a console application. In our template file, the `Main()` method calls `CreateHostBuilder()` which puts together all of the default settings for running a web server on our development machine:
-```csharp
-public static void Main(string[] args)
-{
-    CreateHostBuilder(args).Build().Run();
-}
 
-public static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-            webBuilder.UseStartup<Startup>();
-        });
-```
+{% gist f46be63d2179b955fdc2ee67712bab53 03.cs %}
+
 In .NET Core version 3, the default functionality for creating the web server is pretty well hidden, but as the project grows and we set up a more targeted deployment, we add that configuration here.
 
 In `CreateHostBuilder()`, we reference a class called `Startup` which is found in the `Startup.cs` file. This is the second entry class for our web application. While `Program` configures the web server, `Startup` configures the application itself. `Startup` consists of two methods: `ConfigureServices()` and `Configure()`.
 
-`ConfigureServices()` puts puts together the various services and configuration settings that make up the application. Arguably one of the most important features of an ASP.NET Core application is the way it facilitates [dependency injection](https://stackify.com/dependency-injection-c-sharp/) in our various classes, and all of that is ultimately implemented in this method.
+`ConfigureServices()` puts together the various services and configuration settings that make up the application. Arguably one of the most important features of an ASP.NET Core application is the way it facilitates [dependency injection](https://stackify.com/dependency-injection-c-sharp/) in our various classes, and all of that is ultimately implemented in this method.
 
 The `Configure()` method sets up the various [middleware components](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-3.1) that each HTTP request will go through. Functionality like CORS, authentication, and exception handling will be set up here.
 
 Our last important class lives in `Controllers/WeatherForecastController.cs`. Our `WeatherForecastController` class inherits from the `ControllerBase` class, and it is decorated with the `[ApiController]` annotation which makes its methods available as API endpoints:
-```csharp
-[ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
-{
-    // [...]
 
-    [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
-    {
-        // [...]
-    }
-}
-```
+{% gist f46be63d2179b955fdc2ee67712bab53 04.cs %}
+
 The `[Route("[controller]")]` annotation defines the route based on the name of the controller class, so here the route is `/WeatherForecast`. If I had the same decoration on a controller class called `UsersController`, the route would be `/Users`.
 
 Then, within the controller class, we've decorated a method called `Get()` with the `[HttpGet]` annotation. With the route and the action declarations, the endpoint is set up so that a GET request to `/Users` will return the output of the `UserController.Get()` method.
@@ -121,14 +86,16 @@ info: Microsoft.Hosting.Lifetime[0]
 info: Microsoft.Hosting.Lifetime[0]
       Now listening on: http://localhost:5000
 ```
+
+{% gist f46be63d2179b955fdc2ee67712bab53 05.sh %}
+
 ..., and if you make a GET request to https://localhost:5001/WeatherForecast,...
-```bash
-curl https://localhost:5001/WeatherForecast -k
-```
+
+{% gist f46be63d2179b955fdc2ee67712bab53 05.sh %}
+
 ...you'll see the return of the `WeatherForecastController.Get()` method:`
-```bash
-[{"date":"2020-05-26T13:06:20.464957-05:00","temperatureC":-9,"temperatureF":16,"summary":"Warm"},{"date":"2020-05-27T13:06:20.464998-05:00","temperatureC":-20,"temperatureF":-3,"summary":"Scorching"},{"date":"2020-05-28T13:06:20.464999-05:00","temperatureC":49,"temperatureF":120,"summary":"Balmy"},{"date":"2020-05-29T13:06:20.465-05:00","temperatureC":9,"temperatureF":48,"summary":"Mild"},{"date":"2020-05-30T13:06:20.465-05:00","temperatureC":-9,"temperatureF":16,"summary":"Freezing"}]
-```
+
+{% gist f46be63d2179b955fdc2ee67712bab53 06.json %}
 
 ## Summary
 We've just gotten an overview of this walking skeleton tutorial idea, then went on to scaffold and examine the basic parts of an ASP.NET Core WebApi application. The basic entry classes - `Program` and `Startup` - help configure and launch the application on a server, while the `Controller` classes help define the public endpoints for the application. Lastly, we used two commands to scaffold the application and to run it locally in order to verify our local development environment is working properly before adding to the project. In the next article, I'll walk through some initial configuration in our `Startup` class and adding a service to return a real weather forecast from our controller.

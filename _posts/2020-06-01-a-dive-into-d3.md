@@ -1,7 +1,7 @@
 ---
 layout: post
 title: A Dive Into D3
-draft: true
+draft: false
 standfirst: 'If you are interested in original ways of presenting particularly large, unique, or complex data sets, then a dive into D3 is certainly worth the effort.'
 ---
 
@@ -36,7 +36,7 @@ Before we start adding to the code, here's an inventory of our repo so far:
  - `main.js` is what gets controlled from the DOM. There is a jQuery listener that calls our `getWeather` function and then calls `drawChart` to render the data. There is also a helper function called `sortTimeTemps` that processes the OpenWeatherMap json result so it's easier to work with in the D3 functions.
  - `main.css` contains any styles we'll need. I won't go into how D3 leverages CSS to style the chart, but you can certainly play with the appearance of the line chart from here on your own.
 
-You wont' have to modify any of the files above except `line-chart-.js` for this tutorial.  
+You won't have to modify any of the files above except `line-chart-.js` for this tutorial.  
 
 
 ## 2. Getting an OpenWeatherMap api key
