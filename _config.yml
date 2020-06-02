@@ -5,14 +5,28 @@ description:      >-
   Full-stack software engineer sharing favorite recipes
   in .NET, Angular, & anything else worth tinkering with.
 
-url:              https://jeremywells.io
+url:              jeremywells.io
 baseurl:          /
+author:           'Jeremy Wells'
+twitter:
+  username: jsheridanwells
+  card: summary
+social:
+  name: Jeremy Wells
+  links:
+    - https://github.com/jsheridanwells
+    - https://dev.to/jsheridanwells
+    - https://twitter.com/jsheridanwells
+    - https://linkedin.com/in/jsheridanwells
+lang: en_US
+
 
 # Build settings
 #theme: minima
 plugins:
   - jekyll-feed
   - jekyll-gist
+  - jekyll-seo-tag
 
 # Conversion
 markdown:    kramdown
