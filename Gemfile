@@ -4,7 +4,7 @@ gem "jekyll", "~> 4.0.0"
 gem "rouge"
 gem "jekyll-gist"
 gem 'jekyll-seo-tag'
-
+gem 'jekyll-minifier'
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
 end
