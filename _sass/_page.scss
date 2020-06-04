@@ -75,11 +75,20 @@ p.contact-text {
   font-size: 1.1rem;
 }
 
+.contact-form-group {
+  @include for-tablet-portrait-up {
+    max-width: 500px;
+  }
+}
+
+.contact-submit-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 button.contact-submit-btn {
   background-color: $mediumBlue;
   color: white;
-  float: right;
-  margin-right: 3rem;
 }
 
 button.contact-submit-btn:disabled,
