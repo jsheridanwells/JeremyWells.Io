@@ -86,9 +86,13 @@ If everything's good, it will tell you the project is running on ports 5000 and 
 
 {% gist f46be63d2179b955fdc2ee67712bab53 05.sh %}
 
-..., and if you make a GET request to https://localhost:5001/WeatherForecast, you'll see the return of the `WeatherForecastController.Get()` method:`
+..., and if you make a GET request to https://localhost:5001/WeatherForecast... 
 
-{% gist f46be63d2179b955fdc2ee67712bab53 06.json %}
+{% gist f46be63d2179b955fdc2ee67712bab53 06.sh %}
+
+...you'll see the return of the `WeatherForecastController.Get()` method:`
+
+{% gist f46be63d2179b955fdc2ee67712bab53 07.json %}
 
 ## Summary
 We've just gotten an overview of this walking skeleton tutorial idea, then went on to scaffold and examine the basic parts of an ASP.NET Core WebApi application. The basic entry classes - `Program` and `Startup` - help configure and launch the application on a server, while the `Controller` classes help define the public endpoints for the application. Lastly, we used two commands to scaffold the application and to run it locally in order to verify our local development environment is working properly before adding to the project. In the next article, I'll walk through some initial configuration in our `Startup` class and adding a service to return a real weather forecast from our controller.
