@@ -1,5 +1,5 @@
 ---
-title: Starting Up an Asp.Net Core 3 WebApi
+title: Starting an Asp.Net Core Walking Skeleton
 published: true
 description: 'This is an introductory post for a continuing series on building up a DotNetCore and Angular web application end-to-end.'
 tags: 
