@@ -3,8 +3,10 @@
  * Add validation to contact form.
  */
 window.onload = function() {
+    let pristine;
     const form = document.getElementById('contact-form');
-    const pristine = new Pristine(form, null, true);
+    if (form)
+        pristine = new Pristine(form, null, true);
     const button = document.getElementById('contact-submit');
     const inputs = document.querySelectorAll('.contact-input');
     inputs.forEach(i => enableButtonIfValid(i, pristine, button));
