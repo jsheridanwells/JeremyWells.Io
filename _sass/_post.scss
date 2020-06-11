@@ -38,6 +38,12 @@ h1.post-title {
   }
 }
 
+h3.post-subheading {
+  margin: 0.9rem;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
 .post-date {
   padding-left: 1rem;
   font-size: 0.75rem;
@@ -55,9 +61,13 @@ h1.post-title {
     margin: 4rem 0 2rem 0;
     font-family: "Raleway", sans-serif;
   }
-  p {
-    line-height: 1.3rem;
+  p, ul, li {
+    line-height: 1.8rem;
     margin-bottom: 2rem;
+  }
+  a {
+    color: blue;
+    text-decoration: underline;
   }
 
   @include for-phone-only {
@@ -74,6 +84,7 @@ h1.post-title {
     text-align: right;
     a {
       color: $mediumBlue;
+      font-weight: 800;
     }
 
     @include for-phone-only {
@@ -92,6 +103,10 @@ img.post-splash {
 img.post-image {
   @include block-margins();
   max-width: 100%;
+}
+.gist {
+  margin-bottom: 2rem;
+  //border: 1px solid red;
 }
 
 div.highlight {
