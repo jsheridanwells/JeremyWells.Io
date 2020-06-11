@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Starting Up an Asp.Net Core 3 WebApi 
+title: Starting an Asp.Net Core Walking Skeleton
 subheading: (Weather Walking Skeleton Part 0)
 draft: false
 standfirst: 'This is an introductory post for a continuing series on building up a DotNetCore and Angular web application end-to-end.'
