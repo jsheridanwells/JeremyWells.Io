@@ -1,6 +1,6 @@
 ---
 title: Starting Up an Asp.Net Core 3 WebApi
-published: false
+published: true
 description: 'This is an introductory post for a continuing series on building up a DotNetCore and Angular web application end-to-end.'
 tags: 
  - csharp 
@@ -8,6 +8,8 @@ tags:
  - beginners 
  - tutorial
 ---
+![Walking Skeleton](https://dev-to-uploads.s3.amazonaws.com/i/d4p6sqg1b2ivqiqt0okr.jpg)
+
 ###### Photo by [diana](https://unsplash.com/@thisistherealdiana?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/skeleton?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
 
 ## Introduction
@@ -86,9 +88,35 @@ If everything's good, it will tell you the project is running on ports 5000 and 
 
 {% gist https://gist.github.com/jsheridanwells/f46be63d2179b955fdc2ee67712bab53 file=05.sh %}
 
-..., and if you make a GET request to https://localhost:5001/WeatherForecast, you'll see the return of the `WeatherForecastController.Get()` method:`
+..., and if you make a GET request to https://localhost:5001/WeatherForecast...
 
-{% gist https://gist.github.com/jsheridanwells/f46be63d2179b955fdc2ee67712bab53 file=06.json %}
+{% gist https://gist.github.com/jsheridanwells/f46be63d2179b955fdc2ee67712bab53 file=06.sh %}
+
+...you'll see the return of the `WeatherForecastController.Get()` method:
+
+```
+[
+  {
+    "date": "2020-05-26T13:06:20.464957-05:00",
+    "temperatureC": -9,
+    "temperatureF": 16,
+    "summary": "Warm"
+  },
+  {
+    "date": "2020-05-27T13:06:20.464998-05:00",
+    "temperatureC": -20,
+    "temperatureF": -3,
+    "summary": "Scorching"
+  },
+  {
+    "date": "2020-05-28T13:06:20.464999-05:00",
+    "temperatureC": 49,
+    "temperatureF": 120,
+    "summary": "Balmy"
+  },
+// [...]
+]
+```
 
 ## Summary
 We've just gotten an overview of this walking skeleton tutorial idea, then went on to scaffold and examine the basic parts of an ASP.NET Core WebApi application. The basic entry classes - `Program` and `Startup` - help configure and launch the application on a server, while the `Controller` classes help define the public endpoints for the application. Lastly, we used two commands to scaffold the application and to run it locally in order to verify our local development environment is working properly before adding to the project. In the next article, I'll walk through some initial configuration in our `Startup` class and adding a service to return a real weather forecast from our controller.
