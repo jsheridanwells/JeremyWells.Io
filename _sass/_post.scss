@@ -25,6 +25,11 @@
   @include for-tablet-landscape-up {
     padding: 2rem 3rem 1rem 3rem;
   }
+
+  @include for-lg-desktop-up {
+    max-width: 50%;
+    margin: 1rem auto;
+  }
 }
 
 h1.post-title {
@@ -40,8 +45,14 @@ h1.post-title {
 
 h3.post-subheading {
   margin: 0.9rem;
-  font-size: 0.9rem;
-  text-align: right;
+  font-size: 1.2rem;
+  text-align: center;
+  color: $darkGray;
+
+  @include for-phone-only {
+    margin: 0 0 2rem 0;
+    font-size: 1rem;
+  }
 }
 
 .post-date {

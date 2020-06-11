@@ -13,8 +13,14 @@ ul.index-post-list {
     @include shadow-1;
     margin: 1rem;
     padding: 2rem 1rem;
+
     @include for-phone-only {
       padding-bottom: 1rem;
+    }
+
+    @include for-lg-desktop-up {
+      max-width: 50%;
+      margin: 1rem auto;
     }
   }
 
@@ -46,6 +52,10 @@ ul.index-post-list {
     @include for-phone-only {
       text-align: center;
     }
+  }
+
+  p.excerpt {
+    line-height: 1.8rem;
   }
 
   p.post-read-more {
