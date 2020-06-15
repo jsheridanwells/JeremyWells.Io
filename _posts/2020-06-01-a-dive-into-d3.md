@@ -1,7 +1,7 @@
 ---
 layout: post
 title: A Dive Into D3
-draft: false
+published: true
 standfirst: 'If you are interested in original ways of presenting particularly large, unique, or complex data sets, then a dive into D3 is certainly worth the effort.'
 ---
 

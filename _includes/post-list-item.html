@@ -6,6 +6,8 @@
     <p class="excerpt">
         {% if post.standfirst %}
         {{ post.standfirst }}
+        {% elsif post.description %}
+        {{ post.description }}
         {% else %}
         {{ post.excerpt }}
         {% endif %}
