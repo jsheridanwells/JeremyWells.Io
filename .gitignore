@@ -6,3 +6,4 @@ vendor
 drafts/**/*
 !drafts/.gitkeep
 node_modules
+.env
