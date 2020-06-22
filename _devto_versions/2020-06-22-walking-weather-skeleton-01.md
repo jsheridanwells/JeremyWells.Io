@@ -3,9 +3,7 @@ layout: post
 title: Setting up an N-Tier ASP.NET Core App
 subheading: Weather Walking Skeleton Part 1
 published: true
-description: >-
-    'In this post, we take an ASP.NET Core WebApi application from 
-    boilerplate code to adding our own functionality.'
+description: In this post, we take an ASP.NET Core WebApi application from boilerplate code to adding our own functionality.
 tags: 
  - csharp 
  - dotnet 
@@ -13,7 +11,7 @@ tags:
  - tutorial
 ---
 
-![Three Layers of Apples](/assets/img/2020-06-15/splash.jpg){:class="post-splash"}
+![Walking Skeleton](https://dev-to-uploads.s3.amazonaws.com/i/d4p6sqg1b2ivqiqt0okr.jpg)
 
 ###### Photo by [Elena Koycheva](https://unsplash.com/@lenneek?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/three-layers?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
 
@@ -90,12 +88,13 @@ If everything is set up correctly, your response will be an array of 40 temperat
 
 ## Securing our API key
 
-Although I'm having a hard time imagining what mischief could be made with my OpenWeatherMap API key, it's still best practice to store the actual value separately from the source code. In a real project, there will be all kinds of secret keys, passwords, and database connections strings - and these values would be different from environment to environment - so here we'll save the API key in our file system, then bring it into our application configuration. 
+Although I'm having a hard time imagining what mischief could be made with my OpenWeatherMap API key, it's still best practice to store the actual value separately from the source code. In a real project, there will be all kinds of secret keys, passwords, and database connections strings - and these values would be different from environment to environment - so here we'll save the API key in our file system, then bring it into our application configuration. The __User Secrets__ API that comes with the `dotnet` SDK is an ideal tool for this.
 
 To accomplish this, we'll:
 1. Create a class to help inject our key in the places where we need it.
 1. Save our key to the file system using the `dotnet` cli.
 1. Bring our key into the configuration schema in our project's `Startup.cs` class.
+
 
 First, we'll create a class called `OpenWeatherMap` and give it one property: `ApiKey`:
 ```bash
@@ -107,7 +106,7 @@ $ touch Config/OpenWeather.cs
 
 Add these contents to `OpenWeather.cs`:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 01.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=01.cs %}
 
 When the `dotnet` CLI saves secrets for a project, it's in a directory structured as follows:
 ```
@@ -118,7 +117,7 @@ The `USER-SECRETS-ID` is saved in the .csproj file at the root of the project. A
 
 Open `WeatherWalkingSkeleton.csproj` and add the UserSecretID:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 02.xml %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=02.xml %}
 
 Next, run the following command, replacing `YOUR-API-KEY` with the API key you generated when signing up for the OpenWeatherMap service:
 ```bash
@@ -132,9 +131,9 @@ Successfully saved OpenWeather:ApiKey = YOUR-API-KEY to the secret store.
 
 Now that the key value is stored in our `usersecrets/` directory, we need to bring it into the application. This is done in the `Startup` class by calling a method from the `Configuration` object, then adding it to the application's service collection:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 03.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=03.cs %}
 
-Now the API key is available in the application when we use the OpenWeatherMap API. We'll be able to prove that later when we build a service to call the API.
+Now the API key is available in the application when we use the OpenWeatherMap API. We'll be able to confirm that later when we build a service to call the API.
 
 ## Classes for mapping the OpenWeatherMap API response
 
@@ -153,11 +152,11 @@ $ touch Models/{WeatherForecast.cs,OpenWeatherResponse.cs}
 
 After inspecting the response from OpenWeatherMap in Postman,...
  
- [OpenWeatherMap API response in Postman](/assets/img/2020-06-15/02.png)
+ ![OpenWeatherMap API response in Postman](/assets/img/2020-06-15/02.png)
  
  ...we see an array called `list`. I've decided that I'd like our API to return the date and time, temperature, the "feels like" temperature, as well as the min and max temperatures for each item in that array. We'll add those properties to the `WeatherForecast` model.
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 04.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=04.cs %}
 
 Feel free to experiment and extract different kinds of values from this response as you follow along.
 
@@ -171,19 +170,19 @@ To deserialize this response into a C# object, we'll create three classes, and l
 
 Add the following to `OpenWeatherResponse.cs`:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 05.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=05.cs %}
 
 We'll name the root object `OpenWeatherResponse`. The `System.Text.Json` library provides a data annotation called `JsonPropertyName` which allows us to indicate the json property that we're extracting these values from. This way we can take an array originally called `list` and name it something more meaningful in this context: `Forecasts`.
 
 We'll create a `Forecast` class that will hold the `dt` and `main` properties from the API response:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 06.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=06.cs %}
 
-As before, by taking the values from `main` and renaming them `Temps`, own code will be easier to understand.
+By taking the values from `main` and renaming them `Temps`, our own code will be easier to understand.
 
 Below the `Forecast` class, we'll add the final class called `Temps` to indicate which temperature values to include. As before, we can use `JsonPropertyName` to name our properties with the conventional C#-style casing. 
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 07.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=07.cs %}
 
 Now that a strategy for handling the API data is in place, the next step is to call the API with a service.
 
@@ -191,7 +190,7 @@ Now that a strategy for handling the API data is in place, the next step is to c
 
 As mentioned earlier, ASP.NET Core uses dependency injection as a primary design consideration, and we'll see how this works here as we implement a service that calls the OpenWeatherMap API and returns the data as a `WeatherForecast` object. Our service will be called `OpenWeatherService` with a method called `GetFiveDayForecast`. The method will take a location and a unit of measurement to use when calling the API. The service will be represented in other classes as an interface called `IOpenWeatherService`. 
 
-First we'll create the service class, create the interface, register the types in `Startup`, then inject them into the `WeatherForecastController`. After these steps, we'll implement the actual `GetFiveDayForecast` method.
+We'll build it in such a way that we can verify that the service is wired up correctly in the application first before getting into actual functionality: We'll create the service class, create the interface, register the types in `Startup`, then inject them into the `WeatherForecastController`. After these steps, we'll implement the actual `GetFiveDayForecast` method.
 
 Create a new file to hold the service and the interface:
 ```bash
@@ -201,19 +200,19 @@ $ touch Services/OpenWeatherService.cs
 
 Normally, we would have the interface and the class in separate files, but since this class will only have one method right now, we'll keep them together. Add the following to create the `IOpenWeatherService` interface:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 08.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=08.cs %}
 
 Our interface defines a method that accepts a location and a unit of measurement, and we've restricted it to the three acceptable options using an [enum](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/enum). The method will return a list of objects of the `WeatherForecast` type that we defined earlier. 
 
 Below the interface we'll add a service class to implement the method:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 09.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=09.cs %}
 
 So far, the only thing the method does is raise an exception to say it's not ready yet. We'll leave it this way for now so that we can register it in the `Startup` class and inject it into the controller. Then we can do a quick test with the controller to make sure the method is getting called. After that, we'll build out the method.
 
 Open `Startup.cs` again and find the `ConfigureServices` method. Below the line where we brought in the API key, add the following line:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 10.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=10.cs %}
 
 `services.AddScoped` is the method telling the application to instantiate an `OpenWeatherService` object whenever another class depends on the `IOpenWeatherService` interface. ASP.NET Core provides three methods for registering dependencies: `AddSingleton` which initializes an object once during the application lifecycle, `AddScoped` which keeps the same object available during a single request before disposing it, and `AddTransient` which provides a new instance every time it is injected. The [Microsoft docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1#service-lifetimes-and-registration-options) explain service lifetimes in more detail.
 
@@ -221,11 +220,11 @@ Next, we'll modify the `WeatherForecastController` to return data from the `Open
 
 First, we will inject `IOpenWeatherService` in the class constructor and make it available as a private property called `_weatherService`.
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 11.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=11.cs %}
 
 Next, we'll change the `Get` method to use the data returned from the service.  
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 12.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=12.cs %}
 
 Anything else in the controller can be deleted.
 
@@ -248,15 +247,17 @@ api.openweathermap.org/data/2.5/forecast?q=Chicago&appid=YOUR-API-KEY8&units=imp
 
 First, we need to extract the API key from the configuration of our application. At the top of the class we'll create a constructor that injects an instance of `IOptions`:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 13.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=13.cs %}
 
 Using the `OpenWeather` type, we can deserialize the value of our API key from the local environment without having to write it anywhere in the code. We'll store it as a private property called `_openWeatherConfig`. With the API key, along with the location and unit of measurement coming in as method arguments, we have the values needed to build the URL. We'll do that on the first line of the `GetFiveDayForecast` method:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 14.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=14.cs %}
+
+If you are handy with the debugger in the IDE that you're using, you should set a breakpoint here and inspect the value of `_openWeatherConfig.ApiKey`. 
 
 Next we'll create a list of forecasts that the method will return:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 15.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=15.cs %}
 
 In the middle is where we add the logic to:
 1. Make a GET request to the OpenWeatherMap API,
@@ -265,17 +266,17 @@ In the middle is where we add the logic to:
 
 That implementation can be described as follows:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 16.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=16.cs %}
 
 The entire method should now look like this:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 17.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=17.cs %}
 
 Start the application again, make the same API request to `/WeatherForecast` and we should now see actual data.
 
 The final bit of functionality we'll need is to update the controller so that we can also send location and unit of measurement parameters with our requests. Back in `WeatherForecast.cs`, we'll add two arguments to the `Get` method and use those when we call `GetFiveDayForecast`:
 
-{% gist b4306d62dc2e33d0255d110b67b7286f 18.cs %}
+{% gist https://gist.github.com/jsheridanwells/b4306d62dc2e33d0255d110b67b7286f file=18.cs %}
 
 The ASP.NET Core `ControllerBase` class has several ways to extract parameters and data from HTTP requests. Here, if we simply add arguments to a controller method, and add the matching names in the URL...
 
