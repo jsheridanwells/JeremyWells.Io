@@ -90,12 +90,13 @@ If everything is set up correctly, your response will be an array of 40 temperat
 
 ## Securing our API key
 
-Although I'm having a hard time imagining what mischief could be made with my OpenWeatherMap API key, it's still best practice to store the actual value separately from the source code. In a real project, there will be all kinds of secret keys, passwords, and database connections strings - and these values would be different from environment to environment - so here we'll save the API key in our file system, then bring it into our application configuration. 
+Although I'm having a hard time imagining what mischief could be made with my OpenWeatherMap API key, it's still best practice to store the actual value separately from the source code. In a real project, there will be all kinds of secret keys, passwords, and database connections strings - and these values would be different from environment to environment - so here we'll save the API key in our file system, then bring it into our application configuration. The __User Secrets__ API that comes with the `dotnet` SDK is an ideal tool for this.
 
 To accomplish this, we'll:
 1. Create a class to help inject our key in the places where we need it.
 1. Save our key to the file system using the `dotnet` cli.
 1. Bring our key into the configuration schema in our project's `Startup.cs` class.
+
 
 First, we'll create a class called `OpenWeatherMap` and give it one property: `ApiKey`:
 ```bash
@@ -134,7 +135,7 @@ Now that the key value is stored in our `usersecrets/` directory, we need to bri
 
 {% gist b4306d62dc2e33d0255d110b67b7286f 03.cs %}
 
-Now the API key is available in the application when we use the OpenWeatherMap API. We'll be able to prove that later when we build a service to call the API.
+Now the API key is available in the application when we use the OpenWeatherMap API. We'll be able to confirm that later when we build a service to call the API.
 
 ## Classes for mapping the OpenWeatherMap API response
 
@@ -153,7 +154,7 @@ $ touch Models/{WeatherForecast.cs,OpenWeatherResponse.cs}
 
 After inspecting the response from OpenWeatherMap in Postman,...
  
- [OpenWeatherMap API response in Postman](/assets/img/2020-06-15/02.png)
+ ![OpenWeatherMap API response in Postman](/assets/img/2020-06-15/02.png)
  
  ...we see an array called `list`. I've decided that I'd like our API to return the date and time, temperature, the "feels like" temperature, as well as the min and max temperatures for each item in that array. We'll add those properties to the `WeatherForecast` model.
 
@@ -179,7 +180,7 @@ We'll create a `Forecast` class that will hold the `dt` and `main` properties fr
 
 {% gist b4306d62dc2e33d0255d110b67b7286f 06.cs %}
 
-As before, by taking the values from `main` and renaming them `Temps`, own code will be easier to understand.
+By taking the values from `main` and renaming them `Temps`, our own code will be easier to understand.
 
 Below the `Forecast` class, we'll add the final class called `Temps` to indicate which temperature values to include. As before, we can use `JsonPropertyName` to name our properties with the conventional C#-style casing. 
 
@@ -191,7 +192,7 @@ Now that a strategy for handling the API data is in place, the next step is to c
 
 As mentioned earlier, ASP.NET Core uses dependency injection as a primary design consideration, and we'll see how this works here as we implement a service that calls the OpenWeatherMap API and returns the data as a `WeatherForecast` object. Our service will be called `OpenWeatherService` with a method called `GetFiveDayForecast`. The method will take a location and a unit of measurement to use when calling the API. The service will be represented in other classes as an interface called `IOpenWeatherService`. 
 
-First we'll create the service class, create the interface, register the types in `Startup`, then inject them into the `WeatherForecastController`. After these steps, we'll implement the actual `GetFiveDayForecast` method.
+We'll build it in such a way that we can verify that the service is wired up correctly in the application first before getting into actual functionality: We'll create the service class, create the interface, register the types in `Startup`, then inject them into the `WeatherForecastController`. After these steps, we'll implement the actual `GetFiveDayForecast` method.
 
 Create a new file to hold the service and the interface:
 ```bash
@@ -253,6 +254,8 @@ First, we need to extract the API key from the configuration of our application.
 Using the `OpenWeather` type, we can deserialize the value of our API key from the local environment without having to write it anywhere in the code. We'll store it as a private property called `_openWeatherConfig`. With the API key, along with the location and unit of measurement coming in as method arguments, we have the values needed to build the URL. We'll do that on the first line of the `GetFiveDayForecast` method:
 
 {% gist b4306d62dc2e33d0255d110b67b7286f 14.cs %}
+
+If you are handy with the debugger in the IDE that you're using, you should set a breakpoint here and inspect the value of `_openWeatherConfig.ApiKey`. 
 
 Next we'll create a list of forecasts that the method will return:
 
