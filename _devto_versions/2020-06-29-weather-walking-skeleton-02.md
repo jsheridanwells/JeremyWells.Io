@@ -2,30 +2,29 @@
 layout: post
 title: Consuming third-party APIs in ASP.NET Core
 subheading: Weather Walking Skeleton Part 2
-published: true
+published: false
 description: In this tutorial, we'll tap into C#'s async features to pull data from a third party into an ASP.NET Core web API.
 tags: 
  - csharp 
  - dotnet 
  - beginners 
  - tutorial
+ cover_image: https://dev-to-uploads.s3.amazonaws.com/i/nv9y76xul01kh7i0ciet.jpg
 ---
-
-![Umbrellas](/assets/img/wws2/splash.jpg){:class="post-splash"}
 
 ###### Photo by [Wim van 't Einde](https://unsplash.com/@wimvanteinde?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/three-layers?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
 
 ## Introduction
 
-This post is the second phase of work on a [walking skeleton](https://whatis.techtarget.com/definition/walking-skeleton#:~:text=A%20walking%20skeleton%2C%20in%20a,basic%20components%20of%20the%20system.) application, and part of a series where we build out and deploy a minimal-but-functional web application built with the ASP.NET Core and Angular frameworks. In the [introductory post]({% post_url 2020-06-11-starting-up-an-aspnetcore3-project %}), I explained the intent of this series in more detail and set up and toured the boilerplate code for an ASP.NET Core WebApi application. In the [next post]({% post_url 2020-06-22-walking-weather-skeleton-01 %}), we made some initial configuration, and built out a controller and a service to be able to return data from a third-party API. Here, we will make our service a little more robust. We will refactor this service class to make it more testable and to take advantage of async features in C#.
+This post is the second phase of work on a [walking skeleton](https://whatis.techtarget.com/definition/walking-skeleton#:~:text=A%20walking%20skeleton%2C%20in%20a,basic%20components%20of%20the%20system.) application, and part of a series where we build out and deploy a minimal-but-functional web application built with the ASP.NET Core and Angular frameworks. In the [introductory post](), I explained the intent of this series in more detail and set up and toured the boilerplate code for an ASP.NET Core WebApi application. In the [next post](), we made some initial configuration, and built out a controller and a service to be able to return data from a third-party API. Here, we will make our service a little more robust. We will refactor this service class to make it more testable and to take advantage of async features in C#.
 
 ## Prequisites
 
-This article will be a continuation of [Part 0]({% post_url 2020-06-11-starting-up-an-aspnetcore3-project %}) and [Part 1]({% post_url 2020-06-22-walking-weather-skeleton-01 %}) of this series. My goal for this series is to walk through a sample application while explaining the _hows_ and _whys_ of the ASP.NET Core framework in detail. If you are looking for a solution for consuming a third-party API in an ASP.NET Core application, going through this tutorial on its own should suffice. If you are looking for a more fundamental understanding of the framework, [starting from the beginning]({% post_url 2020-06-11-starting-up-an-aspnetcore3-project %}) may be a better bet. 
+This article will be a continuation of [Part 0]() and [Part 1]() of this series. My goal for this series is to walk through a sample application while explaining the _hows_ and _whys_ of the ASP.NET Core framework in detail. If you are looking for a solution for consuming a third-party API in an ASP.NET Core application, going through this tutorial on its own should suffice. If you are looking for a more fundamental understanding of the framework, [starting from the beginning]() may be a better bet. 
 
 For this tutorial, you will need:
-1. Git, Postman, the .NET Core SDK, and an IDE or text editor that can work comfortably with C# code. Visual Studio Code with [these plugins](https://code.visualstudio.com/docs/languages/csharp) is a serviceable free setup. [Part 0]({% post_url 2020-06-11-starting-up-an-aspnetcore3-project %}) of this series goes through this setup in more detail.
-1. An [OpenWeatherMap](https://openweathermap.org/api) API key. This is the third-party API that we'll be consuming in this example application. in [Part 1]({% post_url 2020-06-22-walking-weather-skeleton-01 %}), I walk through getting the API key and using the User Secrets Manager in .NET Core to store the key in a file system. 
+1. Git, Postman, the .NET Core SDK, and an IDE or text editor that can work comfortably with C# code. Visual Studio Code with [these plugins](https://code.visualstudio.com/docs/languages/csharp) is a serviceable free setup. [Part 0]() of this series goes through this setup in more detail.
+1. An [OpenWeatherMap](https://openweathermap.org/api) API key. This is the third-party API that we'll be consuming in this example application. in [Part 1](), I walk through getting the API key and using the User Secrets Manager in .NET Core to store the key in a file system. 
 1. The starting point for the example code used in this application. You can clone the starting branch for this repository with this command:
  ```bash
 $ git clone -b 1_aspnetcore_webapi_setup --single-branch git@github.com:jsheridanwells/WeatherWalkingSkeleton.git
@@ -60,7 +59,7 @@ info: Microsoft.Hosting.Lifetime[0]
 
 Open Postman, and make a GET request to this URL : `https://localhost:5001/WeatherForecast?location=chicago`. (You can substitute any other city for Chicago).
 
-If the response is an array of temperature forecast objects, then your OpenWeatherMap API key is configured properly. If not, you may want to go back to [Part 1]({% post_url 2020-06-22-walking-weather-skeleton-01 %}) of this series to check over the User Secrets Manager setup. Alternately, if you just want to hard-code the API key and skip saving it to your file system, I'll show you the place to do that further below. 
+If the response is an array of temperature forecast objects, then your OpenWeatherMap API key is configured properly. If not, you may want to go back to [Part 1]() of this series to check over the User Secrets Manager setup. Alternately, if you just want to hard-code the API key and skip saving it to your file system, I'll show you the place to do that further below. 
 
 The file that we will be refactoring the most in this tutorial is located at `./Api/Services/OpenWeatherService.cs`. Open that now in an IDE or text editor. It contains a method called `GetFiveDayForecast`: 
 
