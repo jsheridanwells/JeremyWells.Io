@@ -2,6 +2,7 @@
 layout: post
 title: Consuming third-party APIs in ASP.NET Core
 subheading: Weather Walking Skeleton Part 2
+series: '.NET Core and Angular Walking Skeleton'
 published: true
 description: In this tutorial, we'll tap into C#'s async features to pull data from a third party into an ASP.NET Core web API.
 tags: 

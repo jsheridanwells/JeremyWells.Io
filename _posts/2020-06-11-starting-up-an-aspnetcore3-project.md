@@ -2,6 +2,7 @@
 layout: post
 title: Starting an Asp.Net Core Walking Skeleton
 subheading: (Weather Walking Skeleton Part 0)
+series: '.NET Core and Angular Walking Skeleton'
 published: true
 standfirst: 'This is an introductory post for a continuing series on building up a DotNetCore and Angular web application end-to-end.'
 ---

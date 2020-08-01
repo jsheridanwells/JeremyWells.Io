@@ -1,3 +1,24 @@
+---
+layout: post
+title: TDD and Exception Handling with xUnit in ASP.NET Core
+subheading: Weather Walking Skeleton Part 4
+series: '.NET Core and Angular Walking Skeleton'
+published: false
+description: We continue building out an ASP.NET Core web API by adding tests with xUnit and using those to guide implementing exception handling
+tags: 
+ - csharp 
+ - dotnet 
+ - beginners 
+ - tutorial
+ - testing
+---
+
+
+
+
+
+
+
 this was started in the last post, but we'll move it here. it works better on its own or with unit tests.
 
 Also, we are not handling scenarios where the OpenWeatherMap API might fail, or a bad configuration, or the user sending a location that does not exist. We will need a better exception handling strategy so that our own API can communicate these problems back to the consumer.
@@ -12,3 +33,10 @@ There are several scenarios and strategies for handling them, but for our purpos
 1. __One of our users sends a location that OpenWeatherAPI doesn't recognize:__ I would expect this to happen frequently, and it wouldn't be the result of any fault in the application, so to handle this we'll send back a helpful message to the user without throwing an exception.
 1. __The OpenWeatherMap API key is invalid:__ Right now, the application is running on our local machines with an API key configured. When we deploy to other environments, those servers will also need an API key to run. If the application gets deployed without one, or if the API key expires, we'll need to make that clear to any developers if OpenWeatherMap returns an unauthorized response. 
 1. __OpenWeatherMap returns its own error:__ Since OpenWeatherMap is a third party, we cannot guarantee that it always functions within our own application as expected. If for some reason, a request to OpenWeatherMap fails, we need to handle that scenario as well.
+
+
+
+
+1. Handle an internal error from the API.
+1. Handle a scenario where an API key is invalid.
+1. And since the user needs to send the name of a location to the API, handle an invalid location.
