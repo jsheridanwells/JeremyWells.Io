@@ -3,25 +3,22 @@ layout: post
 title: Testing an ASP.NET Core Service with xUnit
 subheading: Weather Walking Skeleton Part 3
 series: '.NET Core and Angular Walking Skeleton'
-published: true
-description: We continue building out an ASP.NET Core web API by adding tests with xUnit, and 
+published: false
+description: We continue building out an ASP.NET Core web API by adding tests with xUnit
 tags: 
- - csharp 
  - dotnet 
  - beginners 
  - tutorial
  - testing
+cover_image: https://dev-to-uploads.s3.amazonaws.com/i/da3sj33ge6tgqnrx3kcs.jpg
 ---
-
-![Rainbow Test Tubes](/assets/img/wws3/splash.jpg){:class="post-splash"}
-
 ###### Photo by [Joyce McCown](https://unsplash.com/@moonshadowpress?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/test-tubes?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
 
 ## Introduction and prerequisites
 
 This post is part of an ongoing series where we build a ["walking skeleton"](https://whatis.techtarget.com/definition/walking-skeleton#:~:text=A%20walking%20skeleton%2C%20in%20a,basic%20components%20of%20the%20system.) application using ASP.NET Core and Angular as well as other technologies for deployment and testing. By now, our application is a minimally functional web API that organizes and returns weather data from a location. In this post, we will use [xUnit](https://xunit.net/) to test how a service handles calls to a third-party API, then how a controller responds to a successful response. In the next post, we'll then use those tests to scaffold some exception handling that's missing from our classes right now. As in other posts, the aim of this article is to go through the steps with detailed explanations.
 
-If you would like to start from the beginning, [this post]({% post_url 2020-06-11-starting-up-an-aspnetcore3-project  %}){:class="no-target"} will introduce the project and walk you up to this point. If you're just here for a walkthrough of testing with xUnit, then you can:
+If you would like to start from the beginning, [this post](https://dev.to/jsheridanwells/starting-up-an-asp-net-core-3-webapi-1lk7) will introduce the project and walk you up to this point. If you're just here for a walkthrough of testing with xUnit, then you can:
 
 1. Begin by cloning the project up to this point and `cd`-ing into it:
 ```bash
@@ -312,7 +309,7 @@ public async Task Returns_A_WeatherForecast()
 
 }
 
-Fact]
+[Fact]
 public async Task Returns_Expected_Values_From_the_Api()
 {
 
@@ -321,7 +318,7 @@ public async Task Returns_Expected_Values_From_the_Api()
 
 Note that the `[Fact]` annotation allows a test explorer to find and run any test methods.
 
-Now we'll add code to the first method. Since in each test, we'll need to create a `OpenWeatherService`, we'll generate `IOptions<OpenWeather>` and `IHttpClientFactory` objects using the fixtures created above, then create an `OpenWeatherService` named `sut` for "System under test". With the service instantiated, we'll call `GetFiveDayForecastAsync`. On the last line, the `Assert` class from xUnit is used to test that the method is returning the type of object that we expect:
+Now we'll add code to the first method. Since in each test, we'll need to create a `OpenWeatherService`, we'll generate `IOptions<OpenWeather>` and `IHttpClientFactory` objects using the fixtures created above, then create an `OpenWeatherService` named `sut` for "system under test". With the service instantiated, we'll call `GetFiveDayForecastAsync`. On the last line, the `Assert` class from xUnit is used to test that the method is returning the type of object that we expect:
 
 ```csharp
 [Fact]
