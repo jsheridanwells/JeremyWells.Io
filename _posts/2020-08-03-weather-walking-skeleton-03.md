@@ -4,7 +4,7 @@ title: Testing an ASP.NET Core Service with xUnit
 subheading: Weather Walking Skeleton Part 3
 series: '.NET Core and Angular Walking Skeleton'
 published: true
-description: We continue building out an ASP.NET Core web API by adding tests with xUnit, and 
+description: We continue building out an ASP.NET Core web API by adding tests with xUnit.
 tags: 
  - csharp 
  - dotnet 
