@@ -3,7 +3,7 @@ layout: post
 title: TDD and Exception Handling with xUnit in ASP.NET Core
 subheading: Weather Walking Skeleton Part 4
 series: '.NET Core and Angular Walking Skeleton'
-published: false
+published: true
 description: We continue building out an ASP.NET Core web API by adding tests with xUnit and using those to guide implementing exception handling
 tags: 
  - csharp 
