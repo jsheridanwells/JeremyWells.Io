@@ -124,3 +124,9 @@ div.highlight {
   @include block-margins();
 }
 
+p.smaller-text {
+  font-size: 0.8rem;
+  font-style: italic;
+  line-height: 0.95rem;
+}
+

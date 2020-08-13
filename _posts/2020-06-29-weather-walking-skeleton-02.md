@@ -16,6 +16,9 @@ tags:
 
 ###### Photo by [Wim van 't Einde](https://unsplash.com/@wimvanteinde?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/three-layers?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
 
+{:.smaller-text}
+ __Update__ (13 August 2020): A reader on [Dev.to]() pointed out a flaw in the original version where HTTP content was being converted to a string before being deserialized leading to potentially unnecessarily high memory usage. I've updated this article and the corresponding branch of the repo.
+
 ## Introduction
 
 This post is the second phase of work on a [walking skeleton](https://whatis.techtarget.com/definition/walking-skeleton#:~:text=A%20walking%20skeleton%2C%20in%20a,basic%20components%20of%20the%20system.) application, and part of a series where we build out and deploy a minimal-but-functional web application built with the ASP.NET Core and Angular frameworks. In the [introductory post]({% post_url 2020-06-11-starting-up-an-aspnetcore3-project %}), I explained the intent of this series in more detail and set up and toured the boilerplate code for an ASP.NET Core WebApi application. In the [next post]({% post_url 2020-06-22-walking-weather-skeleton-01 %}), we made some initial configuration, and built out a controller and a service to be able to return data from a third-party API. Here, we will make our service a little more robust. We will refactor this service class to make it more testable and to take advantage of async features in C#.
@@ -66,15 +69,16 @@ If the response is an array of temperature forecast objects, then your OpenWeath
 The file that we will be refactoring the most in this tutorial is located at `./Api/Services/OpenWeatherService.cs`. Open that now in an IDE or text editor. It contains a method called `GetFiveDayForecast`: 
 
 ```csharp
-public List<WeatherForecast> GetFiveDayForecast(string location, Unit unit = Unit.Metric)
+public async Task<List<WeatherForecast>> GetFiveDayForecast(string location, Unit unit = Unit.Metric)
 {
     string url = $"https://api.openweathermap.org/data/2.5/forecast?q={ location }&appid={ _openWeatherConfig.ApiKey }&units={ unit }";
     var forecasts = new List<WeatherForecast>();
     using (HttpClient client = new HttpClient())
     {
         var response = client.GetAsync(url).Result;
-        var json = response.Content.ReadAsStringAsync().Result;
-        var openWeatherResponse = JsonSerializer.Deserialize<OpenWeatherResponse>(json);
+        var jsonOpts = new JsonSerializerOptions {IgnoreNullValues = true, PropertyNameCaseInsensitive = true};
+        var contentStream = await response.Content.ReadAsStreamAsync();
+        var openWeatherResponse = JsonSerializer.Deserialize<OpenWeatherResponse>(contentStream, jsonOpts);
         foreach (var forecast in openWeatherResponse.Forecasts)
         {
             forecasts.Add(new WeatherForecast
@@ -95,7 +99,7 @@ public List<WeatherForecast> GetFiveDayForecast(string location, Unit unit = Uni
 1. The method takes in the name of a location and a unit of measurement, defaulting to metric. 
 1. A URL is built using these parameters and an API key. __Note that if you want to skip the configuration step from the previous tutorial, you can copy paste your OpenWeatherMap API key here, and the method should work.__ 
 1. An `HttpClient` object is built to return the data.
-1. `HttpClient` makes the call to the API, reads the result as a JSON string, then deserializes the desired values.
+1. `HttpClient` makes the call to the API, reads the result as a stream, then deserializes the desired values.
 1. Finally, a list of weather forecasts is built and returned.
 
 This method will work as is, but it has a few code smells. First, the service class will be difficult to unit test because `HttpClient` is instantiated directly in the method. A test that triggers the method will make an actual call to the API which is undesirable for several reasons including inconsistent test results if the API happens to fail. We can take advantage of [dependency injection](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1) to make the `HttpClient` object more versatile.
@@ -242,7 +246,7 @@ public async Task<List<WeatherForecast>> GetFiveDayForecastAsync(string location
     // [...]
     var response = await client.GetAsync(url);
     // [...]
-    var json = await response.Content.ReadAsStringAsync();
+    var contentStream = await response.Content.ReadAsStreamAsync();
 ```
 
 This ensures that the method waits until there's a response from the HTTP client, then waits for the result to be encoded. If our method was also getting data from another source, or performing some other intensive operation, it could do that at the same time. As it is, our method isn't performing differently, but using async features where possible is still usually best practice. 
