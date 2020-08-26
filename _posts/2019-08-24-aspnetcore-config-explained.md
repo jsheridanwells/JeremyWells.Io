@@ -279,6 +279,6 @@ In this project, we saw some of the configuration providers that are available i
 
 ## Further reading
 
-[https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1)
-[https://devblogs.microsoft.com/premier-developer/order-of-precedence-when-configuring-asp-net-core/](https://devblogs.microsoft.com/premier-developer/order-of-precedence-when-configuring-asp-net-core/)
-[https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows)
+ - [https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1)
+ - [https://devblogs.microsoft.com/premier-developer/order-of-precedence-when-configuring-asp-net-core/](https://devblogs.microsoft.com/premier-developer/order-of-precedence-when-configuring-asp-net-core/)
+ - [https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows)
