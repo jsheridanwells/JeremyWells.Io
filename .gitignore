@@ -7,3 +7,4 @@ drafts/**/*
 !drafts/.gitkeep
 node_modules
 .env
+.idea/

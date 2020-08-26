@@ -14,7 +14,7 @@ tags:
 ![Recording Console](/assets/img/aspnetcoreconfig/splash.jpg){:class="post-splash"}
 
 ###### Photo by [Alexey Ruban](https://unsplash.com/@intelligenciya?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/recording-console?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText)
-A common consideration for working with an ASP.NET Core application is how to store and retrieve values in configuration settings, as well as how to change and update them as the application moves to different environments. It's common to need sensitive values like passwords, API keys, and database connection strings in order to call out to other services, and these settings must be stored separately from the application's source code. To help manage this process, ASP.NET Core contains a set of configuration providers for retrieving and storing values, as well as a class to make complex settings available in the application as strongly-typed objects.
+A common consideration for working with an ASP.NET Core application is how to store and retrieve values in configuration settings, as well as how to change and update them as the application moves to higher environments. It's common to need sensitive values like passwords, API keys, and database connection strings in order to call out to other services, and these settings must be stored separately from the application's source code. To help manage this process, ASP.NET Core contains a set of configuration providers for retrieving and storing values, as well as a class to make complex settings available in the application as strongly-typed objects.
 
 In this tutorial, I'll use an extremely simple web API to illustrate the different configuration providers and how one overrides the next as the application moves to different environments. We'll start with some boilerplate code, create a class to hold configuration settings, then load those settings from different locations in the file system. Finally, we'll move the application to a Docker container to show how settings can be updated in different environments. 
 
@@ -22,23 +22,21 @@ In this tutorial, I'll use an extremely simple web API to illustrate the differe
 
 I'll assume you have some familiarity with ASP.NET Core applications, but this article will still stay at a beginner level. To build a copy of the example application and follow along, you will need:
 
-1. Version 3.1 of the .NET Core SDK running on your development machine, [which can be downloaded here](https://dotnet.microsoft.com/download).
-1. Docker Desktop running on your local machine. [This is the download page](https://www.docker.com/products/docker-desktop). The version I'm using as of this writing is 19.03.12.
+1. [Version 3.1 of the .NET Core SDK](https://dotnet.microsoft.com/download) running on your development machine.
+1. [Docker Desktop](https://www.docker.com/products/docker-desktop) running on your local machine. The version I'm using as of this writing is 19.03.12.
 1. [Postman](https://www.postman.com/), or an API tool of your choice, is recommended for making calls to the API and inspecting the results.
 1. Lastly, to follow along with the examples, I've created a Github repo with a __before__ and __after__ branch. The following command will clone the repo:
 ```bash
-$ git clone <URL>.git
+$ git clone git@github.com:jsheridanwells/aspnetcore-config-example.git
 ```
 
-To checkout the __before__ and __after__ branches, run:
+To fetch the __before__ and __after__ branches, run:
  
- `$ git checkout before` 
- 
- and 
- 
- `$ git checkout after` 
- 
- respectively.
+ ```bash
+$ git fetch origin before:before 
+$ git fetch origin after:after
+```
+Then, `$ git checkout <branch name>` will take you to before or after.
  
  
  Lastly, I tend to prefer writing .NET Core tutorials as OS-agnostically as possible, so I'll be using the command line with __Bash__ for most of the steps, rather than Visual Studio. If you are using an IDE like Visual Studio or the Windows command line, there may be some differences from what you'll see here. 
@@ -47,7 +45,7 @@ To checkout the __before__ and __after__ branches, run:
 
 Here are the important files we'll be working with in this project:
  - `appsettings.json` and `appsettings.Development.json` are two configuration files provided by ASP.NET core for configuration settings in different environments. The first file, `appsettings.json` contains any default settings, then any `appsettings.{Environment Name}.json` files override those settings. Since these files are stored at the root of the project directory, they should not contain any sensitive keys as these settings will usually checked into the project's version control system.
- - `Program.cs` is the main file that scaffolds an ASP.NET Core application and creates both the application and the host environment for the application. In this project, you'll notice a method called `.ConfigureAppConfiguration` that is commented out. Later in this tutorial, we'll comment the method and play around with the directives in there.
+ - `Program.cs` is the main file that scaffolds an ASP.NET Core application and creates both the application and the host environment for the application. In this project, you'll notice a method called `.ConfigureAppConfiguration` that is commented out. Later in this tutorial, we'll uncomment the method and play around with the directives in there.
  - `Startup.cs` defines all the top-level settings for the application including configuration, dependency in injection, and the middlewares used by the application. In this class, we'll define the entry point for the app's configuration.
  - `Controllers/ConfigController.cs` is the single controller in the project with a single method called `GetConfig` that will be modified to return the values in our settings so that we can inspect the configuration values that are available in the application.
  - Lastly, `Dockerfile` will be used to build the application in a container and experiment with passing in configuration values that way. Note that we won't discuss containerizing applications in this tutorial, but you won't need to know much Docker for this demo.
@@ -148,13 +146,6 @@ All of this happens under the hood, allowing us to write the configuration code 
 When we ran the application in the last step, the configuration values that were returned came from the `./appsettings.json` file. This can be overridden with an `appsettings.{ ENVIRONMENT NAME }.json` file. Add a file at the root of the project called `appsettings.Development.json` and paste in the following:
 ```json
 {
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
-    }
-  },
   "MyConfig": {
     "Id": "6e20863b-ae31-4e6c-8711-00177586bec0",
     "Location": "from appSettings.development.json"
@@ -176,6 +167,11 @@ We'll change the hosting environment to "Staging", then run set the application 
 ```bash
 $ export ASPNETCORE_ENVIRONMENT="Staging"
 $ dotnet run --launch-profile "Staging"
+```
+
+If you are using Windows, the first command is:
+```cmd
+> set ASPNETCORE_ENVIRONMENT="Staging"
 ```
 Now the request returns the settings from the Staging configuration.
 
@@ -205,9 +201,11 @@ Now, if you navigate to `~/.microsoft/usersecrets/<user_secrets_id>/secrets.json
 
 Run the application, make a request to `/config` again, and the values added with the User Secrets Manager have overridden the values from `appsettings.json` without having to modify any of the code. 
 
+Note that the User Secrets Manager is only for development purposes and should not be used in a production scenario since those values are stored on the host in plain text.
+
 ## Environment variables, command line arguments, and container commands
 
-Next, we can set `MyConfig:Id` and `MyConfig:Location` as environment variables and they will take precedent over the user secrets settings.
+We can also set `MyConfig:Id` and `MyConfig:Location` as environment variables and they will take precedent over the user secrets settings.
 
 If you are using Linux or OSX, you can add these as environment variables:
 ```bash
@@ -259,8 +257,28 @@ $ docker run -it -p 5000:5000 \
 ```
 ...and now you have settings from the command line. 
 
+# Setting the configuration provider hierarchy
+
+The default order of configuration providers that get called is logical for most situations, but ASP.NET Core also contains a scaffolding method for overriding the default order. 
+
+In this application, now that there are configuration settings stored in the user secrets file, those will be used over the `asppsettings` files. We can instead specify that we want `appsettings.json` to be used instead of user secrets. 
+
+In the sample project, in `Program.cs` there are five lines commented out that call a method called `ConfigureAppConfiguration` which takes a configuration builder as its second argument. The builder contains several methods for calling on configuration providers, and the settings from the last method to be called will override any previous settings. If you uncomment the lines you'll see the following:
+```csharp
+.ConfigureAppConfiguration((hostContext, config) =>
+{
+    config.AddUserSecrets<MyConfig>();
+    config.AddJsonFile("appsettings.json");
+})
+```
+Run the application, and you'll see that the `appsettings` configuration gets returned. If you change the order of those methods, or add any of the other providers, different configuration settings will be given preference.
+
+## Conclusion
+
+In this project, we saw some of the configuration providers that are available in an ASP.NET Core application and how those settings can be moved around and concealed as the application is deployed to higher environments. This gives several convenient strategies for setting up the application for a variety of deployment types. 
+
 ## Further reading
 
-https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1
-https://devblogs.microsoft.com/premier-developer/order-of-precedence-when-configuring-asp-net-core/
-https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows
+[https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1)
+[https://devblogs.microsoft.com/premier-developer/order-of-precedence-when-configuring-asp-net-core/](https://devblogs.microsoft.com/premier-developer/order-of-precedence-when-configuring-asp-net-core/)
+[https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows)
