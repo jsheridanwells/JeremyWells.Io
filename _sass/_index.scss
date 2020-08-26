@@ -36,10 +36,19 @@ ul.index-post-list {
       text-align: center;
       font-size: 1.5rem;
     }
+    @include for-tablet-landscape-up {
+      padding-left: 2rem;
+    }
+  }
+
+  .post-list-body {
+    @include for-tablet-landscape-up {
+      padding: 0 2rem;
+    }
   }
 
   p {
-    padding: 0;
+    padding: 0 2rem;
     @include for-phone-only {
       font-size: 0.8rem;
     }
@@ -49,6 +58,7 @@ ul.index-post-list {
   }
 
   p.date {
+    padding-left: 2rem;
     @include for-phone-only {
       text-align: center;
     }

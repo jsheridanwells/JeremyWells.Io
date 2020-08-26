@@ -13,7 +13,6 @@
 }
 
 .sidebar-title {
-  margin: 15% 0 0 0;
   padding: 20% 10%;
 
   @include for-phone-only {
@@ -54,10 +53,6 @@ a.sidebar-nav-item {
 
 a.active {
   text-decoration: underline $lightBlue;
-}
-
-.sidebar-social {
-  margin: 30% 0;
 }
 
 ul.sidebar-social-list {

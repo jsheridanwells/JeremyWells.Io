@@ -3,16 +3,18 @@
         <h2 class="post-list-title">{{ post.title }}</h2>
         <p class="date">{{ post.date | date_to_string }}</p>
     </a>
-    <p class="excerpt">
-        {% if post.standfirst %}
-        {{ post.standfirst }}
-        {% elsif post.description %}
-        {{ post.description }}
-        {% else %}
-        {{ post.excerpt }}
-        {% endif %}
-    </p>
-    <p class="post-read-more">
-        <a href="{{ post.url }}">[Read More...]</a>
-    </p>
+    <div class="post-list-body">
+        <p class="excerpt">
+            {% if post.standfirst %}
+            {{ post.standfirst }}
+            {% elsif post.description %}
+            {{ post.description }}
+            {% else %}
+            {{ post.excerpt }}
+            {% endif %}
+        </p>
+        <p class="post-read-more">
+            <a href="{{ post.url }}">[Read More...]</a>
+        </p>
+    </div>
 </div>
