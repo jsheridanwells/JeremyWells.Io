@@ -2,14 +2,17 @@
 /**
  * Add validation to contact form.
  */
-window.onload = function() {
-    let pristine;
-    const form = document.getElementById('contact-form');
-    if (form)
+function addValidation() {
+    var pristine;
+    var form = document.getElementById('contact-form');
+    if (form) {
+        var button = document.getElementById('contact-submit');
+        var inputs = document.querySelectorAll('.contact-input');
         pristine = new Pristine(form, null, true);
-    const button = document.getElementById('contact-submit');
-    const inputs = document.querySelectorAll('.contact-input');
-    inputs.forEach(i => enableButtonIfValid(i, pristine, button));
+        inputs.forEach(function(i) {
+            enableButtonIfValid(i, pristine, button)
+        });
+    }
 }
 
 /**
@@ -21,10 +24,11 @@ window.onload = function() {
  * @returns void
  */
 function enableButtonIfValid(element, pristine, button) {
-    element.addEventListener('keydown', function(e){
-        if (pristine.validate())
-            button.disabled = false;
-        else
+    element.addEventListener('keyup', function(e){
+        button.disabled = !pristine.validate();
+        if (!e.target.value || e.target.value.length < 1)
             button.disabled = true;
     });
 }
+
+addValidation();
