@@ -8,3 +8,6 @@ drafts/**/*
 node_modules
 .env
 .idea/
+
+# vim
+*.swp
