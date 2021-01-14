@@ -46,7 +46,7 @@ h1.post-title {
 h3.post-subheading {
   margin: 0.9rem;
   font-size: 1.2rem;
-  text-align: center;
+  text-align: left;
   color: $darkGray;
 
   @include for-phone-only {
