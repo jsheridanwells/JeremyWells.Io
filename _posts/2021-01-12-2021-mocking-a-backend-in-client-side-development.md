@@ -68,8 +68,7 @@ The first part of Mockaroo is a form for adding properties to our mock data obje
 
 Below you can see the settings that I selected for the mock data object above:
 
-__IMG__
-
+![Mockaroo.com example](/assets/img/mockApi/img1.jpg){:class="post-img}
 
 __id:__ For this field, I selected the __Row Number__ data type which will number all of the records in order. This will help with fetching individual records from our fake API further on in this article. 
 
@@ -84,9 +83,9 @@ __fileType:__ For file types, I'd like my application to only allow Microsoft Wo
 
 This will randomly select one item from that array and return it. 
 
-Now that my data objects are defined, I'll select __# Rows: 100__ and __Format: JSON__ from the bottom of the form. I'll also select __array__ and deselect __include null values__. This is what my Mockaroo form looks like now:
+Now that my data objects are defined, I'll select __# Rows: 100__ and __Format: JSON__ from the bottom of the form. I'll also select __array__ and deselect __include null values__. Again, this is what my Mockaroo form looks like:
 
-__IMG__
+![Mockaroo.com example](/assets/img/mockApi/img1.jpg){:class="post-img}
 
 I'll click the __Preview__ button to make sure my objects look like what I expect, then click __Download Data__ to save it as a JSON file.
 
@@ -154,9 +153,11 @@ Open the JSON file that was downloaded from Mockaroo (it should be called `MOCK_
 
 Run json-server again and request the `/files` endpoint: `http://localhost:3000/files`. 
 
-IMG
+![/files result in browser](/assets/img/mockApi/img2.jpg){:class="post-img}
 
 It should load all 100 of the fake records that Mockaroo generated. Add an id number at the end of the url (`http://localhost:3000/files/42`) and it should return the one record with that id.
+
+![/files result in browser](/assets/img/mockApi/img3.jpg){:class="post-img}
 
 Finally, we can make an AJAX request from inside of our (tiny) web application to make sure it can connect with our front end code.
 
@@ -184,7 +185,7 @@ Open a separate terminal window and `cd` into the `FileViewer` project created a
 
 In a browser, navigate to the http-server url (it would be `http://localhost:8080` by default) and open a dev tools console. The page should have printed the mock data to the console.
 
-IMG
+![Chrome dev console](/assets/img/mockApi/img4.jpg){:class="post-img}
 
 ## Conclusion
 
