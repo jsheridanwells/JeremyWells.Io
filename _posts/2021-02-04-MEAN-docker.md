@@ -49,7 +49,7 @@ $ npm run cp:www
 $ npm run build:api
 $ npm run start:api
 ```
-After a few seconds you should see an error in the console because the application can't connect to a database server. We'll fix that later on.
+You should see the Express app start up as expected, but then after a few seconds, an error will appear in the console because the application can't connect to a database server. We'll fix that later on.
 
 In a second terminal window, run the Angular client application:
 ```bash
@@ -71,13 +71,13 @@ One of the most powerful aspects of Docker is that we can layer different pre-co
 
 Once an image is defined, we can run the container on the host. When a container is run, usually we specify ports and network settings that are opened so that data can pass from the host machine to the container, or from container to container. We would also want to pass environment configuration settings to the container, for example a connection string so that the container can connect to an external database. Docker provides us with a variety of commands including one to run the container as a background process (__"detached mode"__), or with a command to be able to enter the container through the terminal and inspect its contents (`docker exec`, which we'll use later on).
 
-One advantage of containers is that they are ephemeral - all you need is a command `$ docker run <...>` and the container will start with all of the components defined by its Docker image. When we don't need it another command will make the container shut down and disappear. This helps developers to consistently deploy an application to different environments and to be sure it's most likely to run the exact same way. However, any data that is saved inside of the container will also disappear once the container is stopped. To handle persisted data, Docker uses __volumes__ to connect data or files from the host machine to the container when it is running, as well as to write data from the container back to the host. There are (very basically) two types: The first, __bind mounts__ are directories that the developer manages directly. For example, if I want a directory of scripts available in the container, I can bind my local scripts directory in a project's source code to a directory in the container. The second type are called __volumes__ and these are resources that are managed by Docker and live in a special location in the host machine's file system that we don't necessarily need to access ourselves. the advantage of using Docker volumes is that it gives us commands to create, manage, and dispose of persistent data that is consumed by a Docker container, as well as helping us allow different containers access to the same data.
+One advantage of containers is that they are ephemeral - all you need is a command `$ docker run <...>` and the container will start with all of the components defined by its Docker image. When we don't need it, another command will make the container shut down and disappear. This helps developers to consistently deploy an application to different environments and to be sure it's most likely to run the exact same way. However, any data that is saved inside of the container will also disappear once the container is stopped. To handle persisted data, Docker uses __volumes__ to connect data or files from the host machine to the container when it is running, as well as to write data from the container back to the host. There are (very basically) two types: The first, __bind mounts__ are directories that the developer manages directly. For example, if I want a directory of scripts available in the container, I can bind my local scripts directory in a project's source code to a directory in the container. The second type are called __volumes__ and these are resources that are managed by Docker and live in a special location in the host machine's file system that we don't necessarily need to access ourselves. the advantage of using Docker volumes is that it gives us some special commands to create, manage, and dispose of persistent data that is consumed by a Docker container.
 
 Lastly, __Docker Compose__ is a feature that allows you to manage multiple Docker containers. Normally, it's best practice for a Docker container to do only one thing, so for a web application, I might have one container to serve static files publicly, one container to handle the web API, and a third container to run a database server. Docker Compose allows us to create a YAML file, normally named `docker-compose.yaml`, to define how multiple containers are configured and how they are allowed to communicate with each other.
 
 So, taking all of these concepts together, we are going to use Docker to run our development database server in the following ways:
  - We'll use the official MongoDB __image__ to create a __container__ to have all of the functionality of a Mongo server without having to go through the cumbersome process of installing it on a development machine.
- - We'll __bind mount__ a directory of startup scripts to a special directory on the Mongo container called `/docker-entrypoint-initdb.d`. Any bash scripts or Javascript files in this container are immediately run when the container is launched. We'll use this to create a MongoDB database and an application user.
+ - We'll __bind mount__ a directory of startup scripts to a special directory on the Mongo container called `/docker-entrypoint-initdb.d`. Any bash scripts or Javascript files in this directory are immediately run when the container is launched. We'll use this to create a MongoDB database and an application user.
  - We'll define a Docker __volume__ so that the Mongo container can persist data on our host machine. If we ever need to remove all of the saved data and start over, we'll have Docker commands available to do that.
  - Lastly, we'll use __Docker Compose__ to define the Mongo container as a service. With a `docker-compose.yaml` file defined, an application service or other services can be added on for a more robust application.
 
@@ -241,12 +241,12 @@ Here's a walkthrough of what the yaml file is doing:
  - We'll build a container from the official MongoDB image: `image: mongo:latest`.
  - In the `volumes` list there are a few things going on:
  > - First, note that for each item, the syntax is such that the value to the left of the colon (`:`), pertains to the host machine, while to the right belongs to the container (`./host-directory:/container-directory`).
- > - We're mounting `./scripts/mongo/init` to the directory on the container called `/docker-entrypoint-initdb.d`. In the MongoDB image, this is a special directory that runs any Javascript or Bash scripts inside of it when the container is first created.
+ > - We're mounting `./scripts/mongo/init` to the directory on the container called `/docker-entrypoint-initdb.d`. As mentioned earlier, this is a special directory that runs any Javascript or Bash scripts inside of it when the container is first created.
  > - We'll also mount `init` to `/home/mongodb` on the container. This creates the Linux user that can run the scripts with the Mongo shell.
  > - The `seed` scripts will be copied over to `/home/mongodb/seed`. That way they're available to seed the database when the container is running if we want.
  > - The last item - `mean_urls_data:/data/db` will bind the Mongo database files as a Docker volume. This allows data to persist when the container is stopped and restarted. It lets us easily wipe out all of the Mongo data and start over when necessary.
- - Moving on, in `ports`, we're binding our local `28017` port to the conventional Mongo port `27017` on the container.
- - The `environment` list will set all of the environment variables from `.env` to the container.
+ - Moving on, in `ports`, we're connecting our local `28017` port to the conventional Mongo port `27017` on the container.
+ - The `environment` list will set all of the environment variables from `.env` in the container.
  - Lastly, `volumes: mean_urls_data` creates and names the Docker volume on the host machine and must match the last item of the `volumes` list set when defining the `mongodb` service.
 
 ## Getting it up and running
@@ -288,7 +288,7 @@ Run the application again as shown above and navigate to `http://localhost:4200`
 ![A browser view showing the application working as expected](/assets/img/mdb-docker/img-2.png){:class="post-img"}
 
 ## Seeding the database
-The next step is optional, but there are times when it's helpful to start the database with some boilerplate data to test the components more authentically, or to see how the application handles a more realistic volume of data. The `docker exec` command lets us enter the Docker container from the terminal, navigate the file system, and execute bash commands.
+The next step is optional, but there are times when it's helpful to start the database with some boilerplate data to test the components more authentically, or to see how the application handles a more realistic volume of data. The `docker exec` command lets us enter the Docker container from the terminal, navigate the file system on the container, and execute bash commands.
 
 With the container running as in the previous step, execute the following command:
 ```bash
