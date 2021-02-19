@@ -41,15 +41,27 @@ The `main` branch of the repo is the complete example. There is also a branch ca
 $ git checkout start
 $ npm install
 ```
-This example web app is an extremely simple URL shortener. There are a few npm scripts included to simplify running the project. To get it going:
+This example web app is an extremely simple URL shortener. There are a few npm scripts included to simplify running the project. 
+
+To compile and run the code for the API server:
 ```bash
 $ npm run cp:www
-$ npm run dev
+$ npm run build:api
+$ npm run start:api
 ```
-After the Node and Angular servers spin up, if you navigate to `http://localhost:4200`, you should see 
-![A start page for the web application with a form, a button, and an empty results table](/assets/img/mdb-docker/img-1.png){:class="post-img"}
-Note that our API server is failing right now because it's not connecting to a running database server. We'll fix that in the next steps. Stop the application for now (`CTL+C`).
+After a few seconds you should see an error in the console because the application can't connect to a database server. We'll fix that later on.
 
+In a second terminal window, run the Angular client application:
+```bash
+$ npm run start
+```
+After the Node and Angular servers spin up, if you navigate to `http://localhost:4200`, you should see:
+
+![A start page for the web application with a form, a button, and an empty results table](/assets/img/mdb-docker/img-1.png){:class="post-img"}
+
+Again, you'll see some error messages in the browser console caused by not having a database available. 
+
+Stop both the API server and the Angular server (`CTL+C`).
 ## Some terms and concepts
 This tutorial isn't going to be a really great introduction to Docker, but I'd like to go over some concepts that will help clarify the steps we go through below. 
 
@@ -158,7 +170,7 @@ The next step is optional, but I want to also add some seed data so that I can t
 ```bash
 $ mkdir ./scripts/mongo/seed
 ```
-And we'll download some data that I've already generated for the project using [Mockaroo]().
+And we'll download some data that I've already generated for the project using [Mockaroo](https://www.mockaroo.com/).
 ```bash
 $ curl https://raw.githubusercontent.com/jsheridanwells/MeanUrls/main/scripts/mongo/seed/MOCK_DATA.json -o ./scripts/mongo/seed/MOCK_DATA.json
 ```
@@ -272,7 +284,7 @@ mongodb://app_user:app_user()@localhost:28017/MeanUrls
 ```
 You should see that the `MeanUrls` database and the `Urls` collection were created. 
 
-Run the application again - `$ npm run cp:www && npm run dev` and navigate to `http://localhost:4200`. The application should be running in the browser without receving any errors from the API. Lastly, enter a URL to shorten in the application. The object should be saved and everything working as expected:
+Run the application again as shown above and navigate to `http://localhost:4200`. The application should be running in the browser without receving any errors from the API. Lastly, enter a URL to shorten in the application. The object should be saved and everything working as expected:
 ![A browser view showing the application working as expected](/assets/img/mdb-docker/img-2.png){:class="post-img"}
 
 ## Seeding the database
@@ -301,6 +313,8 @@ If your output is similar to...
 
 Now, refresh the application in your web browser, or inspect the database with MongoDB Compass and you should see that 50 fake documents have been added to the `Urls` collection.
 
+To exit the container, type `exit`.
+
 ## Cleanup and some helpful scripts
 If I want to shut down the MongoDB server, I can run:
 ```bash
@@ -316,7 +330,7 @@ The next time I start the MongoDB container, the initialization scripts will run
 
 You can also put the two together:
 ```bash
-$ docker-compose down -v meanurls_mean_urls_data
+$ docker-compose down -v
 ```
 
 Lastly, in projects, I like to include all of the container startup and teardown scripts in the `package.json` for convenience:
