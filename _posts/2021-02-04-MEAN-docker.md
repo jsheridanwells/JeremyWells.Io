@@ -24,9 +24,9 @@ In order to test out the Docker scripts, you'll need [Docker Desktop](https://ww
 
 To demonstrate, I've created [a simple MEAN-stack repo](https://github.com/jsheridanwells/MeanUrls) and I'll show how to add scripts for containerizing the database. However, you could also easily carry out these steps in any other project that uses Mongo - I'll just be going over the Docker setup in this article. The example repo uses Angular, Express, and Typescript, but you don't need to be familiar with any of those to follow along.
 
-I won't be explaining any MongoDB concepts, but that;'s not likely to get in the way of understanding the steps below. 
+I won't be explaining any MongoDB concepts, but that's not likely to get in the way of understanding the steps below. 
 
-I'll give a brief overview of some Docker terms and concepts so that the explanations are clear, but if you're still getting started with Docker, there are far better tutorials out there.
+I'll give a brief overview of some Docker terms and concepts so that the explanations are clear, but if you're still getting started with Docker, [there are far better tutorials out there](https://docker-curriculum.com/).
 
 Now for loading the sample project if you're going to use it: 
 
@@ -49,7 +49,7 @@ $ npm run cp:www
 $ npm run build:api
 $ npm run start:api
 ```
-You should see the Express app start up as expected, but then after a few seconds, an error will appear in the console because the application can't connect to a database server. We'll fix that later on.
+You should see the Express app start up as expected, but then after a few seconds, an error will appear in the console because the application can't connect to a database server. We'll fix that below.
 
 In a second terminal window, run the Angular client application:
 ```bash
@@ -63,15 +63,15 @@ Again, you'll see some error messages in the browser console caused by not havin
 
 Stop both the API server and the Angular server (`CTL+C`).
 ## Some terms and concepts
-This tutorial isn't going to be a really great introduction to Docker, but I'd like to go over some concepts that will help clarify the steps we go through below. 
+Before we set up our Docker configuration, I'd like to go over some concepts that will help clarify the steps we go through. 
 
-__Docker__ is a platform for creating virtual environments called __containers__. I think of a container as a tiny, isolated server that is given just enough resources to run a specific application or a task. Docker containers run on a __host machine__ which is a physical piece of hardware, e.g. my computer if I'm developing locally, or the physical server in a public deployment. Docker containers come from __images__ which are basically a blueprint for creating the container: at a minimum, an image will describe an operating system to run in the container, and it will usually also have packages and libraries installed to help an application accomplish a task. 
+__Docker__ is a platform for creating virtual environments called __containers__. I think of a container as a tiny, isolated server that is given just enough resources to run a single, specific application or a task. Docker containers run on a __host machine__ which is a physical piece of hardware, e.g. my computer if I'm developing locally, or the physical server in a public deployment. Docker containers come from __images__ which are basically a blueprint for creating the container: at a minimum, an image will describe an operating system to run in the container, and it will usually also have packages and libraries installed to help an application accomplish a task. 
 
-One of the most powerful aspects of Docker is that we can layer different pre-configured images, then add our own configurations and artifacts. Hundreds of different vendors and platforms make official Docker images available for their products - different Linux flavors, different Windows products, MySQL, Postgres, SQL Server - and indeed it's a great way to play with all sorts of different technologies. For us, there is [an official MongoDB image](https://hub.docker.com/_/mongo) that we'll use to run a containerized database.
+One of the most powerful aspects of Docker is that we can layer different pre-configured images, then add our own configurations and artifacts. Hundreds of different vendors and platforms make official Docker images available for their products - different Linux flavors, different Windows products, MySQL, Postgres, SQL Server - and indeed it's a great way to play with all sorts of different technologies. For our purposes, there is [an official MongoDB image](https://hub.docker.com/_/mongo) that we'll use to run a containerized database.
 
 Once an image is defined, we can run the container on the host. When a container is run, usually we specify ports and network settings that are opened so that data can pass from the host machine to the container, or from container to container. We would also want to pass environment configuration settings to the container, for example a connection string so that the container can connect to an external database. Docker provides us with a variety of commands including one to run the container as a background process (__"detached mode"__), or with a command to be able to enter the container through the terminal and inspect its contents (`docker exec`, which we'll use later on).
 
-One advantage of containers is that they are ephemeral - all you need is a command `$ docker run <...>` and the container will start with all of the components defined by its Docker image. When we don't need it, another command will make the container shut down and disappear. This helps developers to consistently deploy an application to different environments and to be sure it's most likely to run the exact same way. However, any data that is saved inside of the container will also disappear once the container is stopped. To handle persisted data, Docker uses __volumes__ to connect data or files from the host machine to the container when it is running, as well as to write data from the container back to the host. There are (very basically) two types: The first, __bind mounts__ are directories that the developer manages directly. For example, if I want a directory of scripts available in the container, I can bind my local scripts directory in a project's source code to a directory in the container. The second type are called __volumes__ and these are resources that are managed by Docker and live in a special location in the host machine's file system that we don't necessarily need to access ourselves. the advantage of using Docker volumes is that it gives us some special commands to create, manage, and dispose of persistent data that is consumed by a Docker container.
+One advantage of containers is that they are ephemeral - all you need is a command `$ docker run <...>` and the container will start with all of the components defined by its Docker image. When we don't need it, another command will make the container shut down and disappear. This helps developers to consistently deploy an application to different environments and to be sure it's most likely to run the exact same way. However, any data that is saved inside of the container will also disappear once the container is stopped. To handle persisted data, Docker uses __volumes__ to connect data or files from the host machine to the container when it is running, as well as to write data from the container back to the host. There are two types: The first, __bind mounts__ are directories that the developer manages directly. For example, if I want a directory of scripts available in the container, I can bind my local scripts directory in a project's source code to a directory in the container. The second type are called __volumes__ and these are resources that are managed by Docker and live in a special location in the host machine's file system that we don't necessarily need to access directly. The advantage of using Docker volumes is that it gives us some special commands to create, manage, and dispose of persistent data that is consumed by a Docker container.
 
 Lastly, __Docker Compose__ is a feature that allows you to manage multiple Docker containers. Normally, it's best practice for a Docker container to do only one thing, so for a web application, I might have one container to serve static files publicly, one container to handle the web API, and a third container to run a database server. Docker Compose allows us to create a YAML file, normally named `docker-compose.yaml`, to define how multiple containers are configured and how they are allowed to communicate with each other.
 
@@ -311,7 +311,7 @@ If your output is similar to...
 ```
 ... then you should be good to go.
 
-Now, refresh the application in your web browser, or inspect the database with MongoDB Compass and you should see that 50 fake documents have been added to the `Urls` collection.
+Now, refresh the application in your web browser, or inspect the database with MongoDB Compass, and you should see that 50 fake documents have been added to the `Urls` collection.
 
 To exit the container, type `exit`.
 
@@ -328,7 +328,7 @@ $ docker volume rm meanurls_mean_urls_data
 ```
 The next time I start the MongoDB container, the initialization scripts will run again.
 
-You can also put the two together:
+If you're living dangerously, you can also put the two together:
 ```bash
 $ docker-compose down -v
 ```
