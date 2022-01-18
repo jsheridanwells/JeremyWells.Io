@@ -37,8 +37,8 @@ The first, quickesy way to set up a Raspberry Pi OS is using the [Raspberry Pi I
 ![picture of reformatting](/assets/img/rpi/rpi-reformatting-screen.png){:class="post-img"}
 
 - Once the Raspberry Pi Imager is done downloading, open it up. You may have to give it administrative permissions on your computer.
-- You'll have two selections to make, 1. Choose OS and 2. Choose Storage.
-- Click "Choose OS" and select `Raspberry Pi OS (Other)`, then `Raspberry Pi OS Lite (32-bit)`. This version of the OS doesn't include a Desktop environment so it will only be controllable from  terminal.
+- You'll have two selections to make, __1. Choose OS__ and __2. Choose Storage__.
+- Click "Choose OS" and select `Raspberry Pi OS (Other)`, then `Raspberry Pi OS Lite (32-bit)`. This version of the OS doesn't include a Desktop environment so it will only be controllable from the terminal.
 - Click "Choose Storage" and one of the options should be the drive for the SD card that you formatted earlier.
 - Lastly, click the "Write" button and the imager will do its work to load a boot-able OS onto the SD card. On my machine, this process takes about 5 minutes.
 
@@ -116,8 +116,8 @@ Now that you're Raspberry Pi is provisioned, you're ready to make it do some stu
 
 One way to get around this is to set up your Raspberry Pi code as a remote Git repository, write the files in the local repository, then push them over. I used to do that, it's not too complicated, and it you have the advantage of having a local repo to store all of your code and projects and have them last while you change out and reconfigure multiple Raspberry Pi setups. [This article]() gives some great instructions on how to go about setting up your own remote Git repository.
 
-And even easier solution if you're a VS Code user is, using a new plugin, you can access a directory on your Pi via SSH and edit files directly onto the Pi in your code editor. 
+An even easier solution if you're a VS Code user is, using a new plugin, you can access a directory on your Pi via SSH and edit files directly onto the Pi in your code editor. 
 
 In VS Code, install the plugin [Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh). Then type `CTRL/CMD + SHIFT + P` and type `Remote - SSH Connect to Host`. It will ask for an SSH url (exactly as above), prompt you for a password, then a new VS Code editor will open with access to the Raspberry Pi file system. 
 
-
+And with all that, you've got an unburdened Raspberri Pi for all your home tinkering.
