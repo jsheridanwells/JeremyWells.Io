@@ -16,7 +16,6 @@ social:
   links:
     - https://github.com/jsheridanwells
     - https://dev.to/jsheridanwells
-    - https://twitter.com/jsheridanwells
     - https://linkedin.com/in/jsheridanwells
 lang: en_US
 
@@ -49,8 +48,6 @@ social-icons:
     url: https://github.com/jsheridanwells
   - name: fab fa-dev
     url : https://dev.to/jsheridanwells
-  - name: fab fa-twitter
-    url: https://twitter.com/jsheridanwells
   - name: fab fa-linkedin
     url: https://linkedin.com/in/jsheridanwells
 
